@@ -1,26 +1,49 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #f5f7fa;
+  --surface: #ffffff;
+  --heading: #34343b;
+  --body: #527792;
+  --error: #e74c3c;
+  --warning: #f39c12;
+  --success: #27ae60;
   --foreground: #171717;
+  --primary: #1e8be0;
+  --secondary: #8ac3ef;
+  --accent: #114f7f;
+  --gradient-subtle-light: linear-gradient(135deg, #f5f7fa 0%, #8ac3ef 100%);
+  --gradient-radial-power: radial-gradient(
+    circle at top left,
+    #1e8be0 0%,
+    #114f7f 100%
+  );
+  --gradient-primary: linear-gradient(135deg, #1e8be0 0%, #8ac3ef 100%);
 }
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@theme {
+  --color-background: #f5f7fa;
+  --color-surface: #ffffff;
+  --color-heading: #34343b;
+  --color-body: #527792;
+  --color-error: #e74c3c;
+  --color-warning: #f39c12;
+  --color-success: #27ae60;
+  --color-foreground: #171717;
+  --color-primary: #1e8be0;
+  --color-secondary: #8ac3ef;
+  --color-accent: #114f7f;
+  --color-gradient-radial-power: radial-gradient(
+    circle at top left,
+    #1e8be0 0%,
+    #114f7f 100%
+  );
+  --color-gradient-primary: linear-gradient(135deg, #1e8be0 0%, #8ac3ef 100%);
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  .subtle-light-gradient {
+    background-image: linear-gradient(135deg, #f5f7fa 0%, #8ac3ef 100%);
   }
 }
-
 body {
-  background: var(--background);
-  color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
