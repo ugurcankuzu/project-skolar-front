@@ -1,8 +1,9 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default async function removeJWT() {
-  const cookie = await cookies();
-  cookie.delete("skolar_access_token");
+  (await cookies()).delete("skolar_access_token");
+  redirect("/login");
 }

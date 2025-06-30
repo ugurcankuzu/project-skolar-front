@@ -15,7 +15,6 @@ export default async function login(credentials: LoginFormValues) {
       }),
     });
     const data = await response.json();
-    console.log(data);
     if (response.ok) {
       await setJWT(data.authToken);
       return data;
@@ -23,7 +22,7 @@ export default async function login(credentials: LoginFormValues) {
     throw new Error(data.message);
   } catch (err) {
     return {
-      status: false,
+      success: false,
       message: (err as Error).message,
     };
   }

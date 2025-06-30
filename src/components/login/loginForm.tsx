@@ -12,6 +12,7 @@ import Loader from "../shared/loader";
 import PopUp from "../shared/popup";
 import GoogleLoginButton from "./googleLoginButton";
 import Input from "../shared/input";
+import { useRouter } from "next/navigation";
 
 const LoginFormStyles = {
   formContainer: "flex flex-col gap-4",
@@ -35,15 +36,15 @@ export default function LoginForm() {
     mode: "onBlur",
   });
   const { loading, startLoading, stopLoading } = useLoading();
-
+  const router = useRouter();
   const onSubmit = async (data: LoginFormValues) => {
     startLoading();
     const response = await login(data);
-    if (response.status) {
-      console.log("Login Successful");
-    } else {
+    if (!response.success) {
       console.log("Login Failed: ", response.message);
+      return;
     }
+    router.push("/skolar");
     stopLoading();
   };
 
