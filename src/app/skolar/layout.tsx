@@ -1,7 +1,16 @@
-export default function ApplicationLayout({
+"use server";
+import Header from "@/components/shared/header";
+import { UserContextProvider } from "@/store/userStore";
+
+export default async function AppLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <div>{children}</div>;
+  return (
+    <UserContextProvider>
+      <Header />
+      {children}
+    </UserContextProvider>
+  );
 }
