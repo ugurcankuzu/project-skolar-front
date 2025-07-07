@@ -7,9 +7,13 @@ import LogoutIcon from "@/components/icons/logoutIcon";
 import useScreen from "@/hooks/useScreen";
 import { useUserContext } from "@/store/userStore";
 import { motion } from "motion/react";
+import { useState } from "react";
+import MobileNavbar from "../navbar/mobileNavbar";
+import MobileHeaderMenu from "./mobileHeaderMenu";
 export default function HeaderUserInfoContainer() {
   const userContext = useUserContext();
   const screenSize = useScreen();
+
   return (
     <motion.div
       className="flex items-center justify-end gap-4 flex-1"
@@ -36,11 +40,7 @@ export default function HeaderUserInfoContainer() {
           </div>
         </>
       ) : (
-        <div className="flex items-center justify-center">
-          <button className="text-primary text-sm">
-            <HamburgerMenuIcon />
-          </button>
-        </div>
+        <MobileHeaderMenu />
       )}
     </motion.div>
   );
