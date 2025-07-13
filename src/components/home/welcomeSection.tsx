@@ -1,9 +1,11 @@
 "use client";
+import useNotificationsSWR from "@/hooks/useNotificationsSWR";
 import { useUserContext } from "@/store/userStore";
 import Pill from "../shared/pill";
 
 export default function WelcomeSection() {
   const userStore = useUserContext();
+  const { notifications, isLoading, error } = useNotificationsSWR();
   const getGreetingByTimeOfDay = () => {
     const hour = new Date().getHours();
     if (hour < 12) {
@@ -15,14 +17,17 @@ export default function WelcomeSection() {
     }
   };
   return (
-    <div className="w-full h-96 bg-primary-light rounded-2xl">
+    <div className="w-full bg-surface rounded-2xl space-y-4">
       <p className="text-3xl font-bold text-heading">{`${getGreetingByTimeOfDay()} ${
         userStore.user?.firstName
       }!`}</p>
-      <div className="w-full flex items-center flex-wrap gap-2 py-2">
-        <Pill text="2 Gönderim" color="warning" dot={true} />
-        <Pill text="2 Ödev" color="warning" dot={true} />
-      </div>
+      {notifications && notifications.length > 0 && (
+        <Pill
+          color="warning"
+          text={`${notifications.length} New Notifications`}
+          dot={true}
+        />
+      )}
     </div>
   );
 }

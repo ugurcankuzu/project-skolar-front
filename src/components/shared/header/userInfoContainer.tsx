@@ -10,14 +10,23 @@ import Pill from "../pill";
 import MobileHeaderMenu from "./mobileHeaderMenu";
 import useNotificationsSWR from "@/hooks/useNotificationsSWR";
 import UserInfoSkeleton from "@/skeletons/userInfoContainerSkeleton";
+import NotificationWindow from "./notificationWindow";
+import { useEffect, useState } from "react";
 export default function HeaderUserInfoContainer() {
   const userContext = useUserContext();
   const screenSize = useScreen();
+  const [notificationWindowOpen, setNotificationWindowOpen] =
+    useState<boolean>(false);
+
+  const toggleNotificationWindow = () => {
+    setNotificationWindowOpen(!notificationWindowOpen);
+  };
   const { notifications, isLoading } = useNotificationsSWR();
   if (isLoading) return <UserInfoSkeleton />;
+
   return (
     <motion.div
-      className="flex items-center justify-end gap-4 flex-1"
+      className="flex items-center justify-end gap-4 flex-1 relative"
       variants={enterScreen}
       initial="hidden"
       animate="visible"
@@ -35,11 +44,16 @@ export default function HeaderUserInfoContainer() {
             </p>
           </div> */}
           <div className="flex items-center justify-center relative">
-            <button className="text-primary text-sm">
+            <button
+              className="text-primary text-sm cursor-pointer hover:bg-primary/10 rounded-full p-1"
+              onClick={toggleNotificationWindow}
+            >
               <BellIcon />
-              <span className="absolute -top-1 -right-1 bg-error text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">
-                {notifications?.length}
-              </span>
+              {notifications && notifications.length > 0 && (
+                <span className="absolute -top-1 -right-1 bg-error text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">
+                  {notifications?.length}
+                </span>
+              )}
             </button>
           </div>
           <div className="flex items-center justify-center">
@@ -47,6 +61,12 @@ export default function HeaderUserInfoContainer() {
               <LogoutIcon />
             </button>
           </div>
+          {notificationWindowOpen && (
+            <NotificationWindow
+              notifications={notifications}
+              setWindowOpen={toggleNotificationWindow}
+            />
+          )}
         </>
       ) : (
         <MobileHeaderMenu />
