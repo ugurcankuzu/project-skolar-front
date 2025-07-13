@@ -8,7 +8,7 @@ export default async function SummaryCards() {
     return;
   }
   return (
-    <div className="w-full h-96 sm:h-48 lg:h-24 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="w-full h-96 sm:h-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       <SummaryCard title="Your Courses" value={data?.totalClassrooms || 0} />
       <SummaryCard
         title="Active Assignments"

@@ -3,15 +3,15 @@
 import { enterScreen } from "@/animations/shared";
 import BellIcon from "@/components/icons/bellIcon";
 import LogoutIcon from "@/components/icons/logoutIcon";
+import useNotificationsSWR from "@/hooks/useNotificationsSWR";
 import useScreen from "@/hooks/useScreen";
+import UserInfoSkeleton from "@/skeletons/userInfoContainerSkeleton";
 import { useUserContext } from "@/store/userStore";
 import { motion } from "motion/react";
+import { useState } from "react";
 import Pill from "../pill";
 import MobileHeaderMenu from "./mobileHeaderMenu";
-import useNotificationsSWR from "@/hooks/useNotificationsSWR";
-import UserInfoSkeleton from "@/skeletons/userInfoContainerSkeleton";
 import NotificationWindow from "./notificationWindow";
-import { useEffect, useState } from "react";
 export default function HeaderUserInfoContainer() {
   const userContext = useUserContext();
   const screenSize = useScreen();

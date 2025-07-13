@@ -6,7 +6,7 @@ export default function useScreen() {
   const [screenSize, setScreenSize] = useState({
     currentWidth: typeof window !== "undefined" ? window.innerWidth : 0,
     currentHeight: typeof window !== "undefined" ? window.innerHeight : 0,
-    isMobile: typeof window !== "undefined" ? window.innerWidth < 768 : false,
+    isMobile: typeof window !== "undefined" ? window.innerWidth < 640 : false,
   });
 
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function useScreen() {
         setScreenSize({
           currentWidth: window.innerWidth,
           currentHeight: window.innerHeight,
-          isMobile: window.innerWidth < 768,
+          isMobile: window.innerWidth < 640,
         });
       }, 150);
     };
