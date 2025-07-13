@@ -1,3 +1,4 @@
+import TDashboardSummary from "@/types/dashboardSummary";
 import fetchWrapper from "./fetchWrapper";
 import getJWT from "./getJWT";
 

@@ -7,9 +7,8 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`min-w-64 h-full bg-surface p-4 ${
-        isMobile ? "hidden" : "block"
-      }`}
+      className={`min-w-64 h-full bg-surface p-4 border-r border-gray-200
+       ${isMobile ? "hidden" : "block"}`}
     >
       <NavList />
     </nav>

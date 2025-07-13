@@ -4,3 +4,5 @@ type TDashboardSummary = {
   openAssignments: number;
   submittedAssignments: number;
 };
+
+export default TDashboardSummary;

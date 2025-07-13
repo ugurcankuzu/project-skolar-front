@@ -16,7 +16,6 @@ export default function NotificationWindow({
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      //bubbling
       if (
         modalRef.current &&
         !modalRef.current.contains(event.target as Node)

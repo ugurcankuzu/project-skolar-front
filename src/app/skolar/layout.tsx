@@ -10,11 +10,11 @@ export default async function AppLayout({
 }) {
   return (
     <UserContextProvider>
-      <div className="w-screen max-w-screen h-screen flex flex-col">
+      <div className="w-full h-screen flex flex-col bg-surface overflow-x-hidden">
         <Header />
-        <div className="w-full h-full flex">
+        <div className="w-full flex-1 flex">
           <Navbar />
-          {children}
+          <main className="flex-1 w-full overflow-y-auto">{children}</main>
         </div>
       </div>
     </UserContextProvider>

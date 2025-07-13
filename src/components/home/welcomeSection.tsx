@@ -17,7 +17,7 @@ export default function WelcomeSection() {
     }
   };
   return (
-    <div className="w-full bg-surface rounded-2xl space-y-4">
+    <div className="w-full rounded-2xl space-y-4">
       <p className="text-3xl font-bold text-heading">{`${getGreetingByTimeOfDay()} ${
         userStore.user?.firstName
       }!`}</p>
