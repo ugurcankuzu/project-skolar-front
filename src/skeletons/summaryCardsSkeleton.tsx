@@ -1,9 +1,24 @@
+import { enterScreen } from "@/animations/shared";
+import { motion } from "motion/react";
+
 export default function SummaryCardsSkeleton() {
   return (
-    <div className="w-full h-96 sm:h-48 border flex-col gap-4 animate-pulse">
-      <div className="size-full bg-gray-200 rounded-lg"></div>
-      <div className="size-full bg-gray-200 rounded-lg"></div>
-      <div className="size-full bg-gray-200 rounded-lg"></div>
-    </div>
+    <motion.div
+      variants={enterScreen}
+      className="w-full h-96 sm:h-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 animate-pulse border"
+    >
+      <motion.div
+        variants={enterScreen}
+        className="bg-gray-300 rounded-xl size-full sm:h-32"
+      ></motion.div>
+      <motion.div
+        variants={enterScreen}
+        className="bg-gray-300 rounded-xl size-full sm:h-32"
+      ></motion.div>
+      <motion.div
+        variants={enterScreen}
+        className="bg-gray-300 rounded-xl size-full sm:h-32"
+      ></motion.div>
+    </motion.div>
   );
 }

@@ -21,6 +21,9 @@ export default function HeaderUserInfoContainer() {
   const toggleNotificationWindow = () => {
     setNotificationWindowOpen(!notificationWindowOpen);
   };
+  const logout = () => {
+    userContext.logout();
+  };
   const { notifications, isLoading } = useNotificationsSWR();
   if (isLoading) return <UserInfoSkeleton />;
 
@@ -57,7 +60,10 @@ export default function HeaderUserInfoContainer() {
             </button>
           </div>
           <div className="flex items-center justify-center">
-            <button className="text-primary text-sm">
+            <button
+              className="text-primary text-sm cursor-pointer hover:bg-primary/10 rounded-full p-1"
+              onClick={logout}
+            >
               <LogoutIcon />
             </button>
           </div>

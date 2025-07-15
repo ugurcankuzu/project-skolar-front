@@ -1,8 +1,9 @@
 "use client";
 import { useUserContext } from "@/store/userStore";
 import SparklesIcon from "../icons/sparklesIcon";
-import Link from "next/link";
 import QuickActionItem from "./quickActionItem";
+import { motion } from "motion/react";
+import { enterScreen, fadeIn } from "@/animations/shared";
 
 export default function QuickActions() {
   const userStore = useUserContext();
@@ -22,13 +23,13 @@ export default function QuickActions() {
   ];
   const actions = userStore.user?.isEducator ? educatorActions : studentActions;
   return (
-    <div className="w-full bg-background space-y-4 rounded-2xl p-4">
-      <div className="flex items-center gap-2 font-semibold text-heading">
+    <motion.div variants={fadeIn} className="w-full bg-background space-y-4 rounded-2xl p-4">
+      <motion.div variants={enterScreen} className="flex items-center gap-2 font-semibold text-heading text-xl">
         <span>
           <SparklesIcon />
         </span>
         <h2>Quick Actions</h2>
-      </div>
+      </motion.div>
       <div>
         <ul className="flex flex-col md:flex-row items-center gap-4">
           {actions.map((action) => (
@@ -36,6 +37,6 @@ export default function QuickActions() {
           ))}
         </ul>
       </div>
-    </div>
+    </motion.div>
   );
 }
