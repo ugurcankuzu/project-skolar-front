@@ -2,7 +2,7 @@ import { Variant, Variants } from "motion/react";
 
 export const fadeIn: Variants = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 0.5 } },
+  visible: { opacity: 1, transition: { duration: 0.5, ease: "easeIn" } },
 };
 
 export const expandCircles: Variants = {
@@ -46,6 +46,20 @@ export const enterScreen: Variants = {
       duration: 0.5,
       ease: "easeOut",
       staggerChildren: 0.2,
+    },
+  },
+};
+
+export const containerVariant: Variants = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+      duration: 0.5,
+      ease: "easeOut",
     },
   },
 };

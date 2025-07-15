@@ -2,10 +2,18 @@
 import useNotificationsSWR from "@/hooks/useNotificationsSWR";
 import { useUserContext } from "@/store/userStore";
 import Pill from "../shared/pill";
+import { motion } from "motion/react";
+import { enterScreen } from "@/animations/shared";
 
 export default function WelcomeSection() {
-  const userStore = useUserContext();
+  const { user } = useUserContext();
   const { notifications, isLoading, error } = useNotificationsSWR();
+  const getSubtitle = () => {
+    const educatorSubtitle = "Manage your classrooms and assignments";
+    const studentSubtitle =
+      "Attend your classes, complete assignments, and track your progress.";
+    return user?.isEducator ? educatorSubtitle : studentSubtitle;
+  };
   const getGreetingByTimeOfDay = () => {
     const hour = new Date().getHours();
     if (hour < 12) {
@@ -17,10 +25,11 @@ export default function WelcomeSection() {
     }
   };
   return (
-    <div className="w-full rounded-2xl space-y-4">
+    <motion.div className="w-full rounded-2xl space-y-4" variants={enterScreen}>
       <p className="text-3xl font-bold text-heading">{`${getGreetingByTimeOfDay()} ${
-        userStore.user?.firstName
+        user?.firstName
       }!`}</p>
+      <p className="text-gray-400">{getSubtitle()}</p>
       {notifications && notifications.length > 0 && (
         <Pill
           color="warning"
@@ -28,6 +37,6 @@ export default function WelcomeSection() {
           dot={true}
         />
       )}
-    </div>
+    </motion.div>
   );
 }

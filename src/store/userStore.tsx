@@ -25,10 +25,12 @@ export const UserContext = createContext<{
   user: TUserProfile | null;
   setUser: (user: TUserProfile) => void;
   updateUser: () => Promise<void>; // Artık async olduğu için Promise<void> dönebilir
+  logout: () => void;
 }>({
   user: null,
   setUser: () => {},
   updateUser: async () => {},
+  logout: () => {},
 });
 
 export function useUserContext() {
@@ -110,6 +112,12 @@ export function UserContextProvider({
       stopLoading(); // Manuel güncelleme için görsel feedback bitir
     }
   };
+  //Logout
+  const logout = async () => {
+    await removeJWT();
+    setUser(null);
+    router.push("/login");
+  };
 
   // Ana başlatma süreci tamamlanana kadar tüm alt component'leri (children) render etme.
   // Bu, kullanıcının /skolar sayfasını görmesini engeller.
@@ -126,8 +134,9 @@ export function UserContextProvider({
     <UserContext.Provider
       value={{
         user: user,
-        setUser: setUser, 
+        setUser: setUser,
         updateUser: updateUser,
+        logout: logout,
       }}
     >
       {children}

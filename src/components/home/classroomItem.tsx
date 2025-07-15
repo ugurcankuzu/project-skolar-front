@@ -2,6 +2,8 @@ import formatTimeAgo from "@/helpers/getTimeAgo";
 import TClassroomSummary from "@/types/ClassroomSummary";
 import Link from "next/link";
 import UsersIcon from "../icons/usersIcon";
+import { motion } from "motion/react";
+import { enterScreen } from "@/animations/shared";
 
 interface IClassroomItem {
   classroom: TClassroomSummary;
@@ -9,7 +11,8 @@ interface IClassroomItem {
 
 export default function ClassroomItem({ classroom }: IClassroomItem) {
   return (
-    <li
+    <motion.li
+      variants={enterScreen}
       className="
       h-full flex-shrink-0 snap-start w-11/12 md:w-1/3 lg:w-1/4 flex flex-col group
     "
@@ -24,7 +27,7 @@ export default function ClassroomItem({ classroom }: IClassroomItem) {
           </span>
           <p>{`${classroom.userCount}/${classroom.userLimit}`}</p>
         </div>
-        <div className="bg-surface px-4 py-2 rounded-b-xl flex-1 flex flex-col justify-center group-hover:bg-primary/30 transition-bg duration-300">
+        <div className="bg-surface px-4 py-2 rounded-b-xl flex-1 flex flex-col justify-center group-hover:bg-primary/20 transition-bg duration-300">
           <p className="font-semibold text-heading text-xl line-clamp-1">
             {classroom.title}
           </p>
@@ -33,6 +36,6 @@ export default function ClassroomItem({ classroom }: IClassroomItem) {
           </p>
         </div>
       </Link>
-    </li>
+    </motion.li>
   );
 }

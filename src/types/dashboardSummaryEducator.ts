@@ -1,8 +1,8 @@
-type TDashboardSummary = {
+type TDashboardSummaryEducator = {
   userId: number;
   totalClassrooms: number;
   openAssignments: number;
   submittedAssignments: number;
 };
 
-export default TDashboardSummary;
+export default TDashboardSummaryEducator;
