@@ -1,4 +1,4 @@
-import { Variant, Variants } from "motion/react";
+import { Variants } from "motion/react";
 
 export const fadeIn: Variants = {
   hidden: { opacity: 0 },
@@ -46,6 +46,19 @@ export const enterScreen: Variants = {
       duration: 0.5,
       ease: "easeOut",
       staggerChildren: 0.2,
+    },
+  },
+};
+//elevate on hover
+export const elevate: Variants = {
+  hidden: {
+    y: 0,
+  },
+  visible: {
+    y: -10,
+    transition: {
+      duration: 0.3,
+      ease: "easeOut",
     },
   },
 };

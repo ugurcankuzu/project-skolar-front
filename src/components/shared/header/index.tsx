@@ -1,7 +1,6 @@
-import { Suspense } from "react";
+import { AnimatePresence } from "motion/react";
 import HeaderLogo from "./headerLogo";
 import HeaderUserInfoContainer from "./userInfoContainer";
-import { AnimatePresence } from "motion/react";
 
 const HeaderStyles = {
   header: "w-full h-16 bg-surface flex items-center justify-center",
@@ -16,7 +15,7 @@ const HeaderStyles = {
 export default function Header() {
   return (
     <header className={HeaderStyles.header}>
-      <div className="size-full flex items-center justify-between px-2 sm:px-4 ">
+      <div className="size-full flex items-center justify-between px-2 sm:px-4 shadow">
         <HeaderLogo />
         <AnimatePresence>
           <HeaderUserInfoContainer />

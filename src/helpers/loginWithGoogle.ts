@@ -1,10 +1,6 @@
-"use server";
-
-import setJWT from "./setJWT";
-
 export default async function LoginWithGoogle(idToken: string) {
   try {
-    const response = await fetch(process.env.API_URL + "/auth/google-login", {
+    const response = await fetch("/api/auth/google-login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -15,7 +11,6 @@ export default async function LoginWithGoogle(idToken: string) {
     });
     const data = await response.json();
     if (response.ok) {
-      await setJWT(data.authToken);
       return data;
     }
     throw new Error(data.message);

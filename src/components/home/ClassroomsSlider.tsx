@@ -1,5 +1,5 @@
 import useClassroomsSummarySWR from "@/hooks/useClassroomsSummarySWR";
-import ClassroomItem from "./classroomItem";
+import ClassroomItem from "../shared/classroomItem";
 import ClassroomItemSkeleton from "@/skeletons/classroomItemSkeleton";
 import { motion } from "motion/react";
 import { enterScreen } from "@/animations/shared";
@@ -39,12 +39,17 @@ export default function ClassroomsSlider({ scrollRef }: IClassroomsSlider) {
     }
 
     return classrooms.map((classroom) => (
-      <ClassroomItem key={classroom.id} classroom={classroom} />
+      <li
+        key={classroom.id}
+        className="flex-shrink-0 snap-start w-11/12 md:w-1/3 lg:w-1/4"
+      >
+        <ClassroomItem classroom={classroom} />
+      </li>
     ));
   };
 
   return (
-    <motion.div className="w-full h-48" variants={enterScreen}>
+    <motion.div className="w-full h-64" variants={enterScreen}>
       <motion.ul
         variants={enterScreen}
         className="size-full overflow-x-auto no-scrollbar flex items-stretch snap-x snap-mandatory gap-4 py-2"

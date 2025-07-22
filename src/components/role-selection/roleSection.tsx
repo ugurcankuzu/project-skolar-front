@@ -60,7 +60,7 @@ export default function RoleSection() {
           <p className={RoleSectionStyles.roleText}>Educator</p>
         </RoleCard>
       </motion.div>
-      <motion.div className="w-full flex justify-center">
+      <motion.div className="w-full flex flex-col lg:flex-row items-center justify-center gap-2">
         {loading ? (
           <div>
             <Loader />
@@ -74,6 +74,14 @@ export default function RoleSection() {
             Continue
           </motion.button>
         )}
+        <motion.button
+          className={
+            "px-4 py-2 rounded-lg bg-error text-white font-semibold hover:bg-error/80 hover:text-white cursor-pointer transition-colors duration-300"
+          }
+          onClick={() => userContext.logout()}
+        >
+          Logout
+        </motion.button>
       </motion.div>
     </motion.form>
   );

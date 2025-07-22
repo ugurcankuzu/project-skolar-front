@@ -24,7 +24,7 @@ export default function Classrooms() {
   };
 
   return (
-    <motion.div variants={fadeIn} className="w-full bg-background p-4 rounded-2xl space-y-4">
+    <motion.div variants={fadeIn} className="w-full  p-4 rounded-2xl space-y-4">
       <div className="w-full flex items-center justify-between mb-4">
         <motion.div variants={enterScreen}>
           <h2 className="text-xl font-semibold text-heading flex items-center gap-2">

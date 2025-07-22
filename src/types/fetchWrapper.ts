@@ -1,6 +1,7 @@
 interface IFetchWrapper<T> extends RequestInit {
   parseJson?: boolean;
   url: string;
+  includeCredentials?: boolean;
 }
 interface IApiResponse<T> {
   success: boolean;

@@ -1,8 +1,6 @@
 import Loader from "@/components/shared/loader";
 import getProfile from "@/helpers/getProfile";
-import removeJWT from "@/helpers/removeJWT";
 import dynamic from "next/dynamic";
-import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 export default async function SkolarPage() {
@@ -11,10 +9,7 @@ export default async function SkolarPage() {
     STUDENT: dynamic(() => import("@/views/Home/StudentHomeView")),
   };
   const userProfile = await getProfile();
-  if (!userProfile.success) {
-    await removeJWT();
-    redirect("/login");
-  }
+  console.log(userProfile);
   const ViewComponent = userProfile.data?.isEducator
     ? views.EDUCATOR
     : views.STUDENT;

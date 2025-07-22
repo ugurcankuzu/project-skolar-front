@@ -1,12 +1,12 @@
 "use client";
-import useDashboardSummarySWR from "@/hooks/useDashboardSummarySWR";
+import useDashboardSummaryEducatorSWR from "@/hooks/useDashboardSummaryEducatorSWR";
 import SummaryCard from "./SummaryCard";
 import { motion } from "motion/react";
 import { enterScreen } from "@/animations/shared";
 import SummaryCardsSkeleton from "@/skeletons/summaryCardsSkeleton";
 
 export default function SummaryCards() {
-  const { summaryData, isLoading, error } = useDashboardSummarySWR();
+  const { summaryData, isLoading, error } = useDashboardSummaryEducatorSWR();
   if (error) {
     return <div>An error occurred while fetching summary summaryData.</div>;
   }

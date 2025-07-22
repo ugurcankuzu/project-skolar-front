@@ -5,7 +5,7 @@ import useSWR from "swr";
 
 const SWR_KEY = "dashboardSummary";
 
-export default function useDashboardSummarySWR() {
+export default function useDashboardSummaryEducatorSWR() {
   const {
     data: summaryData,
     isLoading,
