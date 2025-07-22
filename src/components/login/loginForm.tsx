@@ -42,8 +42,10 @@ export default function LoginForm() {
     const response = await login(data);
     if (!response.success) {
       console.log("Login Failed: ", response.message);
+      stopLoading();
       return;
     }
+    console.log("LOGİN İSTEĞİ: ", response);
     router.push("/skolar");
     stopLoading();
   };

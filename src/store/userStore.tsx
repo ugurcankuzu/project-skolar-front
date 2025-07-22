@@ -2,7 +2,6 @@
 
 import Loader from "@/components/shared/loader";
 import getProfile from "@/helpers/getProfile";
-import removeJWT from "@/helpers/removeJWT";
 import useLoading from "@/hooks/useLoading";
 import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
@@ -84,7 +83,6 @@ export function UserContextProvider({
         // Token geçersiz, süresi dolmuş veya herhangi bir ağ hatası.
         // Kullanıcıyı güvenli bir şekilde login sayfasına yönlendir.
         console.error("Kullanıcı başlatma hatası:", err);
-        await removeJWT();
         router.push("/login");
       }
     };
@@ -114,7 +112,6 @@ export function UserContextProvider({
   };
   //Logout
   const logout = async () => {
-    await removeJWT();
     setUser(null);
     router.push("/login");
   };

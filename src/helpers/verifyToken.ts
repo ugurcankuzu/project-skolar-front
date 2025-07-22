@@ -1,22 +1,20 @@
 "use server";
+
 import getJWT from "./getJWT";
 
 export default async function verifyToken() {
   try {
+    //ADD COOKIE TO SERVER ACTION FETCH REQ
     const tkn = await getJWT();
-    if (!tkn)
-      return {
-        success: false,
-        message: "Token not found",
-      };
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("Authorization", `Bearer ${tkn}`);
+
     const response = await fetch(
       process.env.API_URL + "/user/me/verify-token",
       {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${tkn}`,
-        },
+        headers: headers,
         signal: AbortSignal.timeout(3000),
       }
     );

@@ -1,5 +1,6 @@
+// helpers/getProfile.ts - Server component için güncellenmiş versiyon
 "use server";
-import getJWT from "./getJWT";
+import { cookies } from "next/headers";
 
 export default async function getProfile(): Promise<{
   success: boolean;
@@ -7,22 +8,23 @@ export default async function getProfile(): Promise<{
   data?: TUserProfile;
 }> {
   try {
-    const tkn = await getJWT();
-    if (!tkn) throw new Error("Token not found");
-    const response = await fetch(process.env.API_URL + "/user/me", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${tkn}`,
-      },
-    });
-    console.log(response);
-    const result = await response.json();
-    if (!response.ok) throw new Error(result.message);
-    return {
-      success: true,
-      data: result.data,
-    };
+    const cookieStore = await cookies();
+    const allCookies = cookieStore.toString();
+
+    const response = await fetch(
+      process.env.NEXT_PUBLIC_BASE_URL + "/api/user/me",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: allCookies, // Server-side'da cookie'leri manuel gönder
+        },
+      }
+    );
+
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message);
+    return data;
   } catch (err) {
     return {
       success: false,
@@ -30,3 +32,20 @@ export default async function getProfile(): Promise<{
     };
   }
 }
+/* try {
+    const response = await fetchWrapper<TUserProfile>({
+      url: process.env.NEXT_PUBLIC_API_URL + "/user/me",
+      method: "GET",
+    });
+    console.log("Profil Response'u:", response);
+    if (!response.success) throw new Error(response.message);
+    return {
+      success: true,
+      data: response.data,
+    };
+  } catch (err) {
+    return {
+      success: false,
+      message: (err as Error).message,
+    };
+  } */

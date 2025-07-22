@@ -1,9 +1,9 @@
 "use client";
+import { enterScreen } from "@/animations/shared";
 import useNotificationsSWR from "@/hooks/useNotificationsSWR";
 import { useUserContext } from "@/store/userStore";
-import Pill from "../shared/pill";
 import { motion } from "motion/react";
-import { enterScreen } from "@/animations/shared";
+import Pill from "../shared/pill";
 
 export default function WelcomeSection() {
   const { user } = useUserContext();

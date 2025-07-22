@@ -13,12 +13,15 @@ export default function NavList() {
       path: "/skolar",
       name: "Home",
       icon: HomeIcon,
+      // 1. Burası ana giriş noktası olduğu için isBasePath: true eklendi.
+      isBasePath: true,
     },
     {
       id: 1,
-      path: "/skolar/classrooms",
+      path: "/skolar/classroom",
       name: "Classrooms",
       icon: ClassroomIcon,
+      // Diğerleri için eklemeye gerek yok, varsayılanı false.
     },
     {
       id: 2,
@@ -27,6 +30,7 @@ export default function NavList() {
       icon: AssignmentsIcon,
     },
   ];
+
   return (
     <motion.ul
       className="flex flex-col gap-2"
@@ -40,6 +44,9 @@ export default function NavList() {
           path={path.path}
           name={path.name}
           Icon={<path.icon className="size-5" />}
+          // 2. `isBasePath` prop'u NavItem component'ine aktarıldı.
+          // Eğer `path.isBasePath` undefined ise, NavItem bunu false olarak kabul eder.
+          isBasePath={path.isBasePath}
         />
       ))}
     </motion.ul>

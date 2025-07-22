@@ -1,3 +1,4 @@
+"use server";
 import getJWT from "./getJWT";
 
 export default async function roleSelect(
@@ -9,15 +10,18 @@ export default async function roleSelect(
 }> {
   try {
     const tkn = await getJWT();
+    //ADD COOKIE TO SERVER ACTION FETCH REQ
+    if (!tkn) throw new Error("No JWT found");
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("Authorization", `Bearer ${tkn}`);
+
     const response = await fetch(
       /* process.env.API_URL */ "https://localhost:7004" +
         "/user/me/role-select",
       {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${tkn}`,
-        },
+        headers: headers,
         body: JSON.stringify({
           isEducator: role === "educator",
         }),
