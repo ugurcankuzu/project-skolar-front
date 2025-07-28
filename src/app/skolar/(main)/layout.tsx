@@ -13,7 +13,7 @@ export default async function AppLayout({
         <Header />
         <div className="w-full flex-1 flex">
           <Navbar />
-          <main className="flex-1 w-full overflow-y-auto">{children}</main>
+          <main className="flex-1 w-full overflow-y-auto relative">{children}</main>
         </div>
       </div>
     </UserContextProvider>

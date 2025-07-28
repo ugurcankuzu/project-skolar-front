@@ -5,7 +5,7 @@ export default function SummaryCardsSkeleton() {
   return (
     <motion.div
       variants={enterScreen}
-      className="w-full h-96 sm:h-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 animate-pulse border"
+      className="w-full h-96 sm:h-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 animate-pulse"
     >
       <motion.div
         variants={enterScreen}
