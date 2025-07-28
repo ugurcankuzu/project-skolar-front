@@ -5,6 +5,7 @@ import ClassroomItem from "../shared/classroomItem";
 
 export default function MyClassrooms() {
   const { classrooms, isLoading, error } = useClassroomsSummarySWR();
+
   const renderClasrooms = () => {
     if (error) {
       return (
@@ -55,5 +56,3 @@ export default function MyClassrooms() {
     </div>
   );
 }
-
-//TODO: Burası tamam gibi duruyor. Buradan sonra create classroom kısmını yapıp student view'a bakacağız.
