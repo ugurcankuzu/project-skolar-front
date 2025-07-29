@@ -48,7 +48,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
       <AnimatePresence>
         {isOpen && modalComponent && (
           <motion.div
-            className="w-full h-full flex items-center justify-center fixed top-0 left-0 z-50 bg-black/40"
+            className="size-full flex items-center justify-center fixed top-0 left-0 z-50 bg-black/40"
             onClick={closeModal}
             role="dialog"
             aria-modal="true"
@@ -60,6 +60,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
             <motion.div
               onClick={(e) => e.stopPropagation()}
               variants={enterScreen}
+              className="w-[95%] md:w-1/2 lg:w-1/3"
             >
               {modalComponent}
             </motion.div>
