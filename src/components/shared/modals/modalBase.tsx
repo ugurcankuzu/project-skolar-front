@@ -1,4 +1,5 @@
 import XMarkIcon from "@/components/icons/xMarkIcon";
+import { useModal } from "@/store/modalStore";
 import { ReactNode } from "react";
 
 interface IModalBase {
@@ -11,6 +12,7 @@ export default function ModalBase({
   title,
   description,
 }: IModalBase) {
+  const { closeModal } = useModal()!;
   return (
     <div
       className="w-full min-h-[200px] bg-surface rounded-xl shadow-xl p-4 flex flex-col gap-4
@@ -23,7 +25,10 @@ export default function ModalBase({
             <p className="text-sm text-gray-400">{description}</p>
           )}
         </div>
-        <button className="bg-primary shadow text-white font-semibold p-1 rounded-full border border-primary hover:bg-primary/90 hover:text-white transition-colors cursor-pointer">
+        <button
+          onClick={closeModal}
+          className="bg-primary shadow text-white font-semibold p-1 rounded-full border border-primary hover:bg-primary/90 hover:text-white transition-colors cursor-pointer"
+        >
           <XMarkIcon />
         </button>
       </div>

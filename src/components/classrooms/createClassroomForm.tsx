@@ -1,13 +1,18 @@
 "use client";
+import EPopupColors from "@/enums/popupColors";
+import createClassroom from "@/helpers/createClassroom";
+import useLoading from "@/hooks/useLoading";
 import {
-  CreateClassroomFormValues,
   CreateClassroomFormSchema,
+  CreateClassroomFormValues,
 } from "@/types/createClassroomForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import Input from "../shared/input";
-import createClassroom from "@/helpers/createClassroom";
 import { mutate } from "swr";
+import Input from "../shared/input";
+import PopUp from "../shared/popup";
+import useToast from "@/hooks/useToast";
+import Loader from "../shared/loader";
 
 export default function CreateClassroomForm() {
   const {
@@ -20,18 +25,32 @@ export default function CreateClassroomForm() {
     mode: "onBlur",
     resolver: zodResolver(CreateClassroomFormSchema),
   });
+  const { loading, startLoading, stopLoading } = useLoading();
+  const { message, type, showToast } = useToast();
   const submitHandler = async (data: CreateClassroomFormValues) => {
-    const formData = new FormData();
-    formData.append("title", data.title);
-    formData.append("description", data.description);
-    formData.append("userLimit", data.userLimit.toString());
-    if (data.imageFile && data.imageFile.length > 0) {
-      formData.append("imageFile", data.imageFile[0]);
-    }
-    const res = await createClassroom(formData);
-    console.log(res);
-    if (res.success) {
-      mutate("classroomsSummary");
+    startLoading();
+    try {
+      const formData = new FormData();
+      formData.append("title", data.title);
+      formData.append("description", data.description);
+      formData.append("userLimit", data.userLimit.toString());
+      if (data.imageFile && data.imageFile.length > 0) {
+        formData.append("imageFile", data.imageFile[0]);
+      }
+      const res = await createClassroom(formData);
+      console.log(res);
+      if (res.success) {
+        mutate("classroomsSummary");
+        showToast(res.message ?? "Classroom created successfully.", "success");
+        reset();
+        clearErrors();
+      } else {
+        showToast(res.message ?? "An unexpected error occured.", "error");
+      }
+    } catch (err) {
+      showToast("An unexpected error occured.", "error");
+    } finally {
+      stopLoading();
     }
   };
   return (
@@ -39,6 +58,16 @@ export default function CreateClassroomForm() {
       className="flex flex-col gap-4"
       onSubmit={handleSubmit(submitHandler, (errors) => console.log(errors))}
     >
+      {message && type === "success" && (
+        <div>
+          <PopUp popupColor={EPopupColors.SUCCESS} popupMessage={message} />
+        </div>
+      )}
+      {message && type === "error" && (
+        <div>
+          <PopUp popupColor={EPopupColors.ERROR} popupMessage={message} />
+        </div>
+      )}
       <div className="space-y-2">
         <label htmlFor="title">Title</label>
         <Input id="title" {...register("title")} />
@@ -48,6 +77,7 @@ export default function CreateClassroomForm() {
           </p>
         )}
       </div>
+
       <div className="space-y-2">
         <label htmlFor="description">Description</label>
         <Input id="description" {...register("description")} />
@@ -85,8 +115,9 @@ export default function CreateClassroomForm() {
       </div>
       <div className="flex items-center justify-end gap-2">
         <button
-          className="bg-surface text-primary font-semibold px-4 py-2 rounded-full border border-secondary hover:bg-secondary/90 hover:text-white transition-colors cursor-pointer"
+          className="bg-surface text-primary font-semibold px-4 py-2 rounded-full border border-secondary hover:bg-secondary/90 hover:text-white transition-colors cursor-pointer disabled:bg-gray-300 disabled:cursor-not-allowed disabled:text-gray-400 disabled:border-gray-300"
           type="reset"
+          disabled={loading}
           onClick={() => {
             reset();
             clearErrors();
@@ -96,9 +127,10 @@ export default function CreateClassroomForm() {
         </button>
         <button
           type="submit"
-          className="bg-primary text-white font-semibold px-4 py-2 rounded-full border border-primary hover:bg-primary/90 hover:text-white transition-colors cursor-pointer"
+          className="bg-primary text-white font-semibold px-4 py-2 rounded-full border border-primary hover:bg-primary/90 hover:text-white transition-colors cursor-pointer disabled:bg-surface disabled:cursor-not-allowed disabled:text-gray-400 disabled:border-surface"
+          disabled={loading}
         >
-          Submit
+          {loading ? <Loader /> : "Submit"}
         </button>
       </div>
     </form>
