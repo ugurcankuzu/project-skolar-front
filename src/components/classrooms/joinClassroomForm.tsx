@@ -20,7 +20,7 @@ export default function JoinClassroomForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     reset,
     clearErrors,
     setValue,
@@ -194,7 +194,7 @@ export default function JoinClassroomForm() {
         <button
           type="submit"
           className="bg-primary text-white font-semibold px-4 py-2 rounded-full border border-primary hover:bg-primary/90 hover:text-white transition-colors cursor-pointer disabled:bg-surface disabled:cursor-not-allowed disabled:text-gray-400 disabled:border-surface"
-          disabled={loading}
+          disabled={loading || !isValid}
         >
           {loading ? <Loader /> : "Join"}
         </button>
