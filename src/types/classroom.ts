@@ -4,6 +4,7 @@ type TClassroom = {
   description: string;
   userCount: number;
   userLimit: number;
+  joinCode: string;
   participants: Array<any>;
   owner: string;
   createdAt: string;

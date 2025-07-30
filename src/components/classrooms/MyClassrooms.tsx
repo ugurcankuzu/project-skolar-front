@@ -4,14 +4,29 @@ import ClassroomItemSkeleton from "@/skeletons/classroomItemSkeleton";
 import ClassroomItem from "../shared/classroomItem";
 import { useModal } from "@/store/modalStore";
 import CreateClassroomModal from "../shared/modals/createClassroomModal";
+import { useUserContext } from "@/store/userStore";
+import JoinClassroomModal from "../shared/modals/joinClassroomModal";
 
 export default function MyClassrooms() {
   const { classrooms, isLoading, error } = useClassroomsSummarySWR();
+  const { user } = useUserContext();
   const modalContext = useModal();
   const handleCreateClassroom = () => {
     modalContext?.openModal(<CreateClassroomModal />);
   };
-
+  const handleJoinClassroom = () => {
+    modalContext?.openModal(<JoinClassroomModal />);
+  };
+  const renderAction = () => {
+    return (
+      <button
+        onClick={user?.isEducator ? handleCreateClassroom : handleJoinClassroom}
+        className="bg-primary shadow text-white font-semibold px-4 py-2 rounded-full border border-primary hover:bg-primary/90 hover:text-white transition-colors cursor-pointer"
+      >
+        {user?.isEducator ? "Create Classroom" : "Join Classroom"}
+      </button>
+    );
+  };
   const renderClasrooms = () => {
     if (error) {
       return (
@@ -50,12 +65,7 @@ export default function MyClassrooms() {
     <div className="size-full flex flex-col gap-4 rounded-xl p-4">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <h1 className="text-2xl font-semibold text-heading">My Classrooms</h1>
-        <button
-          onClick={handleCreateClassroom}
-          className="bg-primary shadow text-white font-semibold px-4 py-2 rounded-full border border-primary hover:bg-primary/90 hover:text-white transition-colors cursor-pointer"
-        >
-          Create Classroom
-        </button>
+        {renderAction()}
       </div>
       <div className="w-full h-full">
         <ul className="size-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
