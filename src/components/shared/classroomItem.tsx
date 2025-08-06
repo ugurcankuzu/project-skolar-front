@@ -6,12 +6,14 @@ import { motion } from "motion/react";
 import { enterScreen } from "@/animations/shared";
 import CustomImage from "./CustomImage";
 import ClockIcon from "../icons/clockIcon";
+import classroomLinkGenerate from "@/helpers/classroomLinkGenerate";
 
 interface IClassroomItem {
   classroom: TClassroomSummary;
 }
 
 export default function ClassroomItem({ classroom }: IClassroomItem) {
+  const generatedUrl = classroomLinkGenerate(classroom.id, classroom.title);
   return (
     <motion.div
       variants={enterScreen}
@@ -20,7 +22,7 @@ export default function ClassroomItem({ classroom }: IClassroomItem) {
     "
     >
       <Link
-        href={`/skolar/classroom/${classroom.id}`}
+        href={`${generatedUrl}`}
         className="flex flex-col bg-background rounded-lg size-full hover:shadow-md transition-shadow duration-300"
       >
         <div className="w-full h-1/2 relative">
