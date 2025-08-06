@@ -11,13 +11,11 @@ export default async function AppLayout({
   return (
     <UserContextProvider>
       <ModalProvider>
-        {" "}
-        {/* En üste taşındı */}
-        <div className="w-full h-screen flex flex-col bg-surface overflow-x-hidden">
+        <div className="w-full h-screen flex flex-col bg-surface overflow-hidden">
           <Header />
-          <div className="w-full flex-1 flex">
+          <div className="w-full flex-1 flex min-h-0">
             <Navbar />
-            <main className="flex-1 w-full overflow-y-auto relative">
+            <main className="flex-1 w-full h-full overflow-y-auto overflow-x-hidden relative">
               {children}
             </main>
           </div>
