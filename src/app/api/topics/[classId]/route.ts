@@ -35,3 +35,38 @@ export async function GET(
     );
   }
 }
+export async function POST(
+  req: NextRequest,
+  { params }: { params: { classId: string } }
+) {
+  try {
+    const formData = await req.formData();
+    const cookieStore = await cookies();
+    const urlParams = await params;
+    const { classId } = urlParams;
+    const res = await fetch(process.env.API_URL + "/topics/" + classId + "/", {
+      method: "POST",
+      headers: {
+        Cookie: cookieStore.toString(),
+      },
+      body: formData,
+    });
+    console.log(res);
+    const data: IApiResponse<TTopic> = await res.json();
+    if (!res.ok) {
+      return NextResponse.json(
+        { success: false, message: data.message },
+        { status: res.status }
+      );
+    }
+    return NextResponse.json(
+      { success: true, data: data.data },
+      { status: res.status }
+    );
+  } catch (err) {
+    return NextResponse.json(
+      { success: false, message: (err as Error).message },
+      { status: 500 }
+    );
+  }
+}

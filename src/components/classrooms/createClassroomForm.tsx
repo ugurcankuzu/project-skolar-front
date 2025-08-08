@@ -28,8 +28,8 @@ export default function CreateClassroomForm() {
   const { loading, startLoading, stopLoading } = useLoading();
   const { message, type, showToast } = useToast();
   const submitHandler = async (data: CreateClassroomFormValues) => {
-    startLoading();
     try {
+      startLoading();
       const formData = new FormData();
       formData.append("title", data.title);
       formData.append("description", data.description);
