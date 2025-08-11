@@ -5,6 +5,8 @@ import TParticipant from "@/types/participant";
 import ParticipantsHead from "./participantHead";
 import ParticipantItem from "./participantItem";
 import ParticipantTableSkeleton from "@/skeletons/classrooms/participantTableSkeleton";
+import { useModal } from "@/store/modalStore";
+import AddParticipantModal from "@/components/shared/modals/addParticipantModal";
 
 const mockData: TParticipant[] = [
   {
@@ -32,6 +34,10 @@ const mockData: TParticipant[] = [
 export default function ParticipantsTable() {
   const { id } = useClassroomId();
   const { participants, isLoading, error } = useParticipantsInClassSWR(id);
+  const modalContext = useModal();
+  const handleOpenModal = () => {
+    modalContext?.openModal(<AddParticipantModal />);
+  };
   if (isLoading) return <ParticipantTableSkeleton />;
   if (error)
     return (
@@ -44,7 +50,10 @@ export default function ParticipantsTable() {
     <div className="flex flex-col gap-4">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <h2 className="text-2xl font-semibold text-heading">Participants</h2>
-        <button className="bg-primary shadow text-white font-semibold px-4 py-2 rounded-full border border-primary hover:bg-primary/90 hover:text-white transition-colors cursor-pointer">
+        <button
+          onClick={handleOpenModal}
+          className="bg-primary shadow text-white font-semibold px-4 py-2 rounded-full border border-primary hover:bg-primary/90 hover:text-white transition-colors cursor-pointer"
+        >
           Add Participant
         </button>
       </div>
