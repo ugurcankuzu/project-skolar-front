@@ -8,9 +8,8 @@ export async function POST(
   { params }: { params: Promise<{ topicId: string }> }
 ) {
   try {
-    //ClassId bypassed we don't need classId for this request. But we had to use this dynamic path
-    // and nextjs dynamic route requires all the params to be present in the path.
-
+    //We dont use classId which coming from params. But needed to use this path because of same dynamic path error. 
+    //Ignore ClassID for this operation just use topicId
     const urlParams = await params;
     const topicId = urlParams.topicId;
     const cookieStore = await cookies();
