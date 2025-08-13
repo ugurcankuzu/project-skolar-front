@@ -1,5 +1,7 @@
 import { HTMLAttributes, ReactNode, useState } from "react";
 import ExpandCollapseIcon from "../icons/expandCollapseIcon";
+import { useModal } from "@/store/modalStore";
+import CreateTopicNoteModal from "./modals/createTopicNoteModal";
 
 interface ITreeItem<T, A> {
   item: T;
@@ -9,7 +11,10 @@ interface ITreeItem<T, A> {
   subItemListStyle?: HTMLAttributes<HTMLUListElement>;
 }
 
-export default function TreeItem<T, A extends { id: string | number }>({
+export default function TreeItem<
+  T extends { id: string | number },
+  A extends { id: string | number }
+>({
   item,
   render,
   childItems,
@@ -21,9 +26,27 @@ export default function TreeItem<T, A extends { id: string | number }>({
   const toggleExpand = () => {
     setExpanded((state) => !state);
   };
+  const modalContext = useModal();
+  const handleOpenModal = () => {
+    modalContext?.openModal(
+      <CreateTopicNoteModal topicId={item.id as number} />
+    );
+  };
   return (
     <div className="flex flex-col gap-4">
       {render(item)}
+      <div>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            handleOpenModal();
+          }}
+          className="text-primary font-medium px-4 py-2 rounded-md border border-dashed border-primary hover:bg-primary/90 hover:text-white transition-colors cursor-pointer"
+        >
+          Add Sub-topic
+        </button>
+      </div>
       {hasChildren && (
         <>
           <button
