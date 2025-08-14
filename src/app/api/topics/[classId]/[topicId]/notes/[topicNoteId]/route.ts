@@ -1,31 +1,32 @@
 import { IApiResponse } from "@/types/fetchWrapper";
-import TTopicNote from "@/types/TopicNote";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(
+export async function DELETE(
   req: NextRequest,
-  { params }: { params: Promise<{ topicId: string }> }
+  {
+    params,
+  }: {
+    params: Promise<{ classId: string; topicId: string; topicNoteId: string }>;
+  }
 ) {
   try {
-    //We dont use classId which coming from params. But needed to use this path because of same dynamic path error.
-    //Ignore ClassID for this operation just use topicId
-    const urlParams = await params;
-    const topicId = urlParams.topicId;
+    const { classId, topicId, topicNoteId } = await params;
     const cookieStore = await cookies();
-    const body = await req.formData();
     const res = await fetch(
-      process.env.API_URL + "/topics/" + topicId + "/notes",
+      process.env.API_URL + "/topics/" + topicId + "/notes/" + topicNoteId,
       {
-        method: "POST",
+        method: "DELETE",
         headers: {
+          "Content-Type": "application/json",
           Cookie: cookieStore.toString(),
         },
-        body: body,
+        body: JSON.stringify({
+          classId: classId,
+        }),
       }
     );
-    console.log(res);
-    const data: IApiResponse<TTopicNote> = await res.json();
+    const data: IApiResponse<string> = await res.json();
     if (!res.ok)
       return NextResponse.json(
         {
@@ -37,7 +38,7 @@ export async function POST(
     return NextResponse.json(
       {
         success: true,
-        data: data.data,
+        message: "Note deleted successfully",
       },
       { status: res.status }
     );
