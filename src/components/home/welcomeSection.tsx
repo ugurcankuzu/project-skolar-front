@@ -4,6 +4,7 @@ import useNotificationsSWR from "@/hooks/useNotificationsSWR";
 import { useUserContext } from "@/store/userStore";
 import { motion } from "motion/react";
 import Pill from "../shared/pill";
+import WelcomeSectionSkeleton from "@/skeletons/welcomeSectionSkeleton";
 
 export default function WelcomeSection() {
   const { user } = useUserContext();
@@ -25,18 +26,23 @@ export default function WelcomeSection() {
     }
   };
   return (
-    <motion.div className="w-full rounded-2xl space-y-4" variants={enterScreen}>
-      <p className="text-3xl font-bold text-heading">{`${getGreetingByTimeOfDay()} ${
-        user?.firstName
-      }!`}</p>
-      <p className="text-gray-400">{getSubtitle()}</p>
-      {notifications && notifications.length > 0 && (
-        <Pill
-          color="warning"
-          text={`${notifications.length} New Notifications`}
-          dot={true}
-        />
+    <div className="w-full rounded-2xl space-y-4">
+      {user && (
+        <>
+          <p className="text-3xl font-bold text-heading">{`${getGreetingByTimeOfDay()} ${
+            user?.firstName
+          }!`}</p>
+          <p className="text-gray-400">{getSubtitle()}</p>
+          {notifications && notifications.length > 0 && (
+            <Pill
+              color="warning"
+              text={`${notifications.length} New Notifications`}
+              dot={true}
+            />
+          )}
+        </>
       )}
-    </motion.div>
+      {!user && <WelcomeSectionSkeleton />}
+    </div>
   );
 }

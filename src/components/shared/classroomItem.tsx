@@ -31,6 +31,7 @@ export default function ClassroomItem({ classroom }: IClassroomItem) {
             fill={true}
             alt={`${classroom.title} classroom image.`}
             className="object-cover rounded-t-lg"
+            
           />
         </div>
         <div className="px-4 py-2 rounded-b-lg flex-1 flex flex-col justify-center group-hover:bg-gray-100 transition-colors duration-300">

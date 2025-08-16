@@ -45,7 +45,7 @@ export const enterScreen: Variants = {
     transition: {
       duration: 0.5,
       ease: "easeOut",
-      staggerChildren: 0.2,
+      staggerChildren: 0.05,
     },
   },
 };
@@ -70,7 +70,7 @@ export const containerVariant: Variants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.2,
+      staggerChildren: 0.02,
       duration: 0.5,
       ease: "easeOut",
     },
