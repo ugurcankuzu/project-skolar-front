@@ -1,22 +1,29 @@
 "use client";
 import XMarkIcon from "@/components/icons/xMarkIcon";
-import CreateTopicModal from "@/components/shared/modals/createTopicModal";
-import RemoveSubTopicModal from "@/components/shared/modals/removeSubTopicModal";
 import TreeItem from "@/components/shared/treeItem";
 import formatTimeAgo from "@/helpers/getTimeAgo";
 import useClassroomId from "@/hooks/useClassroomId";
 import useTopicsSWR from "@/hooks/useTopicsSWR";
 import TopicTreeSkeleton from "@/skeletons/classrooms/topicTreeSkeleton";
 import { useModal } from "@/store/modalStore";
+import { useUserContext } from "@/store/userStore";
 import TTopicNote from "@/types/TopicNote";
 import TTopic from "@/types/Topics";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { JSX } from "react";
+const CreateTopicModal = dynamic(
+  () => import("@/components/shared/modals/createTopicModal")
+);
+const RemoveSubTopicModal = dynamic(
+  () => import("@/components/shared/modals/removeSubTopicModal")
+);
 
 export default function TopicsTree() {
   const { id } = useClassroomId();
   const { topics, isLoading, error } = useTopicsSWR(id);
   const modalContext = useModal();
+  const { user } = useUserContext();
   if (isLoading) return <TopicTreeSkeleton />;
   if (error)
     return (
@@ -40,16 +47,18 @@ export default function TopicsTree() {
         key={id}
       >
         <p className="font-semibold text-heading">{item.title}</p>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            handleOpenModal(<RemoveSubTopicModal topicNote={item} />);
-          }}
-          className="hover:bg-error/20 text-error rounded-full p-2 transition-colors cursor-pointer"
-        >
-          <XMarkIcon />
-        </button>
+        {user?.isEducator && (
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              handleOpenModal(<RemoveSubTopicModal topicNote={item} />);
+            }}
+            className="hover:bg-error/20 text-error rounded-full p-2 transition-colors cursor-pointer"
+          >
+            <XMarkIcon />
+          </button>
+        )}
       </div>
     );
   };
@@ -60,12 +69,14 @@ export default function TopicsTree() {
     <div className="flex flex-col gap-4">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <h2 className="text-2xl font-semibold text-heading">Topics</h2>
-        <button
-          onClick={() => handleOpenModal(<CreateTopicModal />)}
-          className="bg-primary shadow text-white font-semibold px-4 py-2 rounded-full border border-primary hover:bg-primary/90 hover:text-white transition-colors cursor-pointer"
-        >
-          Add Topic
-        </button>
+        {user?.isEducator && (
+          <button
+            onClick={() => handleOpenModal(<CreateTopicModal />)}
+            className="bg-primary shadow text-white font-semibold px-4 py-2 rounded-full border border-primary hover:bg-primary/90 hover:text-white transition-colors cursor-pointer"
+          >
+            Add Topic
+          </button>
+        )}
       </div>
       <div>
         {topics && topics?.length > 0 && (
