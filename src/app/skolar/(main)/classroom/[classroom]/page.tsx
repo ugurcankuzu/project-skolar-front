@@ -1,6 +1,6 @@
 import { parseClassroomLink } from "@/helpers/classroomLinkGenerate";
 import getProfile from "@/helpers/getProfile";
-import dynamic from "next/dynamic";
+import ClassroomDetailPageView from "@/views/Classrooms/ClassroomDetail/ClassroomDetailPageView";
 import { notFound } from "next/navigation";
 
 export default async function ClassroomDetailPage({
@@ -16,22 +16,6 @@ export default async function ClassroomDetailPage({
     console.log(err);
     notFound();
   }
-  const Views = {
-    EDUCATOR: dynamic(
-      () =>
-        import(
-          "@/views/Classrooms/ClassroomDetail/EducatorClassroomDetailPageView"
-        )
-    ),
-    STUDENT: dynamic(
-      () =>
-        import(
-          "@/views/Classrooms/ClassroomDetail/StudentClassroomDetailPageView"
-        )
-    ),
-  };
-  const user = await getProfile();
-  const isEducator = user.data?.isEducator;
-  const ViewComponent = isEducator ? Views.EDUCATOR : Views.STUDENT;
-  return <ViewComponent />;
+
+  return <ClassroomDetailPageView />;
 }

@@ -3,7 +3,7 @@ import ParticipantsTable from "@/components/classrooms/classroomDetail/participa
 import TopicsTree from "@/components/classrooms/classroomDetail/topicsTree";
 import ViewContainer from "@/components/shared/viewContainer";
 
-export default function EducatorClassroomDetailPageView() {
+export default function ClassroomDetailPageView() {
   return (
     <div className="size-full flex flex-col gap-4 items-center">
       <ViewContainer>

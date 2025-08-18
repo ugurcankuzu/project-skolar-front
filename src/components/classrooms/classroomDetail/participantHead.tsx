@@ -1,4 +1,7 @@
+import { useUserContext } from "@/store/userStore";
+
 export default function ParticipantsHead() {
+  const { user } = useUserContext();
   return (
     <tr className="bg-background">
       <th className="whitespace-nowrap p-2 border-r border-gray-300">Id</th>
@@ -12,7 +15,7 @@ export default function ParticipantsHead() {
       <th className="whitespace-nowrap p-2 border-r border-gray-300">
         Joined At
       </th>
-      <th className="whitespace-nowrap p-2">Ops.</th>
+      {user?.isEducator && <th className="whitespace-nowrap p-2">Ops.</th>}
     </tr>
   );
 }
