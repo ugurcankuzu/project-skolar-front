@@ -1,13 +1,17 @@
-import RemoveParticipantModal from "@/components/shared/modals/removeParticipantModal";
 import formatTimeAgo from "@/helpers/getTimeAgo";
 import { useModal } from "@/store/modalStore";
+import { useUserContext } from "@/store/userStore";
 import TParticipant from "@/types/participant";
-
+import dynamic from "next/dynamic";
+const RemoveParticipantModal = dynamic(
+  () => import("@/components/shared/modals/removeParticipantModal")
+);
 interface IParticipantItem {
   participant: TParticipant;
 }
 export default function ParticipantItem({ participant }: IParticipantItem) {
   const modalContext = useModal();
+  const { user } = useUserContext();
   const handleOpenModal = () => {
     modalContext?.openModal(
       <RemoveParticipantModal participant={participant} />
@@ -22,14 +26,16 @@ export default function ParticipantItem({ participant }: IParticipantItem) {
       <td className="p-2 border-r border-gray-300">
         {formatTimeAgo(participant.joinedAt)}
       </td>
-      <td className="p-2 text-center">
-        <button
-          onClick={handleOpenModal}
-          className="bg-error rounded-lg px-4 py-1 text-white hover:bg-error/80 active:bg-error/90 transition-colors cursor-pointer"
-        >
-          Kick
-        </button>
-      </td>
+      {user?.isEducator && (
+        <td className="p-2 text-center">
+          <button
+            onClick={handleOpenModal}
+            className="bg-error rounded-lg px-4 py-1 text-white hover:bg-error/80 active:bg-error/90 transition-colors cursor-pointer"
+          >
+            Kick
+          </button>
+        </td>
+      )}
     </tr>
   );
 }

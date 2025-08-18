@@ -1,11 +1,17 @@
 import { HTMLAttributes, JSX, ReactNode, useState } from "react";
 import ExpandCollapseIcon from "../icons/expandCollapseIcon";
 import { useModal } from "@/store/modalStore";
-import CreateTopicNoteModal from "./modals/createTopicNoteModal";
 import XMarkIcon from "../icons/xMarkIcon";
-import RemoveTopicModal from "./modals/removeTopicModal";
 import TTopic from "@/types/Topics";
+import { useUserContext } from "@/store/userStore";
+import dynamic from "next/dynamic";
 
+const RemoveTopicModal = dynamic(
+  () => import("@/components/shared/modals/removeTopicModal")
+);
+const CreateTopicNoteModal = dynamic(
+  () => import("@/components/shared/modals/createTopicNoteModal")
+);
 interface ITreeItem<T, A> {
   item: T;
   render: (item: T) => ReactNode;
@@ -30,6 +36,7 @@ export default function TreeItem<
     setExpanded((state) => !state);
   };
   const modalContext = useModal();
+  const { user } = useUserContext();
   const handleOpenModal = (modalWindow: JSX.Element) => {
     modalContext?.openModal(modalWindow);
   };
@@ -40,31 +47,35 @@ export default function TreeItem<
   };
   return (
     <div className="flex flex-col gap-4 relative">
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          e.preventDefault();
-          handleRemoveButtonModal();
-        }}
-        className="absolute top-0 right-0 hover:bg-error/20 text-error rounded-full p-2 transition-colors cursor-pointer"
-      >
-        <XMarkIcon />
-      </button>
-      {render(item)}
-      <div>
+      {user?.isEducator && (
         <button
           onClick={(e) => {
             e.stopPropagation();
             e.preventDefault();
-            handleOpenModal(
-              <CreateTopicNoteModal topicId={item.id as number} />
-            );
+            handleRemoveButtonModal();
           }}
-          className="text-primary font-medium px-4 py-2 rounded-md border border-dashed border-primary hover:bg-primary/90 hover:text-white transition-colors cursor-pointer"
+          className="absolute top-0 right-0 hover:bg-error/20 text-error rounded-full p-2 transition-colors cursor-pointer"
         >
-          Add Sub-topic
+          <XMarkIcon />
         </button>
-      </div>
+      )}
+      {render(item)}
+      {user?.isEducator && (
+        <div>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              handleOpenModal(
+                <CreateTopicNoteModal topicId={item.id as number} />
+              );
+            }}
+            className="text-primary font-medium px-4 py-2 rounded-md border border-dashed border-primary hover:bg-primary/90 hover:text-white transition-colors cursor-pointer"
+          >
+            Add Sub-topic
+          </button>
+        </div>
+      )}
       {hasChildren && (
         <>
           <button

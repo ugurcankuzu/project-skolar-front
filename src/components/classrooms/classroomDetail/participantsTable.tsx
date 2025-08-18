@@ -1,40 +1,21 @@
 "use client";
 import useClassroomId from "@/hooks/useClassroomId";
 import useParticipantsInClassSWR from "@/hooks/useParticipantsInClassSWR";
-import TParticipant from "@/types/participant";
-import ParticipantsHead from "./participantHead";
-import ParticipantItem from "./participantItem";
 import ParticipantTableSkeleton from "@/skeletons/classrooms/participantTableSkeleton";
 import { useModal } from "@/store/modalStore";
-import AddParticipantModal from "@/components/shared/modals/addParticipantModal";
+import { useUserContext } from "@/store/userStore";
+import ParticipantsHead from "./participantHead";
+import ParticipantItem from "./participantItem";
+import dynamic from "next/dynamic";
+const AddParticipantModal = dynamic(
+  () => import("@/components/shared/modals/addParticipantModal")
+);
 
-const mockData: TParticipant[] = [
-  {
-    id: 1,
-    firstName: "John",
-    lastName: "Doe",
-    email: "john.doe@example.com",
-    joinedAt: new Date().toString(),
-  },
-  {
-    id: 2,
-    firstName: "Jane",
-    lastName: "Smith",
-    email: "jane.smith@example.com",
-    joinedAt: new Date().toString(),
-  },
-  {
-    id: 3,
-    firstName: "Peter",
-    lastName: "Jones",
-    email: "peter.jones@example.com",
-    joinedAt: new Date().toString(),
-  },
-];
 export default function ParticipantsTable() {
   const { id } = useClassroomId();
   const { participants, isLoading, error } = useParticipantsInClassSWR(id);
   const modalContext = useModal();
+  const { user } = useUserContext();
   const handleOpenModal = () => {
     modalContext?.openModal(<AddParticipantModal />);
   };
@@ -50,12 +31,14 @@ export default function ParticipantsTable() {
     <div className="flex flex-col gap-4">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <h2 className="text-2xl font-semibold text-heading">Participants</h2>
-        <button
-          onClick={handleOpenModal}
-          className="bg-primary shadow text-white font-semibold px-4 py-2 rounded-full border border-primary hover:bg-primary/90 hover:text-white transition-colors cursor-pointer"
-        >
-          Add Participant
-        </button>
+        {user?.isEducator && (
+          <button
+            onClick={handleOpenModal}
+            className="bg-primary shadow text-white font-semibold px-4 py-2 rounded-full border border-primary hover:bg-primary/90 hover:text-white transition-colors cursor-pointer"
+          >
+            Add Participant
+          </button>
+        )}
       </div>
       <div className="w-full max-w-full overflow-x-auto border border-gray-300 rounded-xl">
         {participants && participants?.length > 0 && (
