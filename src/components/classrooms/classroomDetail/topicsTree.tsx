@@ -1,6 +1,7 @@
 "use client";
 import XMarkIcon from "@/components/icons/xMarkIcon";
 import TreeItem from "@/components/shared/treeItem";
+import classroomLinkGenerate from "@/helpers/classroomLinkGenerate";
 import formatTimeAgo from "@/helpers/getTimeAgo";
 import useClassroomId from "@/hooks/useClassroomId";
 import useTopicsSWR from "@/hooks/useTopicsSWR";
