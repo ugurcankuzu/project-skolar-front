@@ -1,6 +1,7 @@
 // app/api/user/me/route.ts
 import getJWT from "@/helpers/getJWT";
 import { IApiResponse } from "@/types/fetchWrapper";
+import { TUserProfile } from "@/types/UserProfile";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -60,5 +61,5 @@ export async function GET(req: NextRequest) {
   }
 }
 
-export async function PATCH(req: NextRequest) {} //Implemented later.
-export async function DELETE(req: NextRequest) {} //Implemented later
+export async function PATCH(req: NextRequest) { } //Implemented later.
+export async function DELETE(req: NextRequest) { } //Implemented later
