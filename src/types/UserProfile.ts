@@ -1,4 +1,4 @@
-type TUserProfile = {
+export type TUserProfile = {
   id: number;
   firstName: string;
   lastName: string;

@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
       },
       { status: res.status }
     );
-  } catch (err) {
+  } catch {
     return NextResponse.json(
       {
         success: false,
