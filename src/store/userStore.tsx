@@ -3,6 +3,7 @@
 import Loader from "@/components/shared/loader";
 import getProfile from "@/helpers/getProfile";
 import useLoading from "@/hooks/useLoading";
+import { TUserProfile } from "@/types/UserProfile";
 import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 
