@@ -72,7 +72,11 @@ export default function TopicDetailsView({ settings }: ITopicDetailsView) {
 
         <div className="space-y-4">
           <h2 className="text-xl font-semibold text-heading">Notes</h2>
-          <TopicNotesList notes={topic.topicNotes} />
+          <TopicNotesList
+            notes={topic.topicNotes}
+            classroomId={settings.classroomId}
+            topicId={settings.topicId}
+          />
         </div>
       </ViewContainer>
     </div>

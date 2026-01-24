@@ -33,7 +33,12 @@ export default function TopicsTree() {
   const renderItem = (item: TTopic) => {
     return (
       <div className="space-y-2">
-        <p className="font-semibold text-heading">{item.title}</p>
+        <Link
+          href={`/skolar/classroom/${id}/topic/${item.id}`}
+          className="font-semibold text-heading hover:text-primary transition-colors"
+        >
+          {item.title}
+        </Link>
         {item.description && (
           <p className="text-body text-sm">{item.description}</p>
         )}
@@ -41,26 +46,52 @@ export default function TopicsTree() {
       </div>
     );
   };
-  const renderChild = (item: TTopicNote, id: string | number) => {
+  const renderChild = (
+    item: TTopicNote,
+    id: string | number,
+    topicId: number
+  ) => {
     return (
-      <div
-        className="space-y-2 border-b border-gray-300 pb-2 last:border-b-0 last:pb-0 flex items-center justify-between"
-        key={id}
+      <Link
+        href={`/skolar/classroom/${id}/topic/${topicId}/note/${item.id}`}
+        key={item.id}
+        className="block"
+        onClick={(e) => e.stopPropagation()}
       >
-        <p className="font-semibold text-heading">{item.title}</p>
-        {user?.isEducator && (
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              handleOpenModal(<RemoveSubTopicModal topicNote={item} />);
-            }}
-            className="hover:bg-error/20 text-error rounded-full p-2 transition-colors cursor-pointer"
-          >
-            <XMarkIcon />
-          </button>
-        )}
-      </div>
+        <div className="space-y-2 border-b border-gray-300 pb-2 last:border-b-0 last:pb-0 flex items-center justify-between group hover:bg-primary/5 rounded-md px-2 py-1 transition-colors">
+          <p className="font-semibold text-heading group-hover:text-primary transition-colors">
+            {item.title}
+          </p>
+          <div className="flex items-center gap-2">
+            {user?.isEducator && (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleOpenModal(<RemoveSubTopicModal topicNote={item} />);
+                }}
+                className="hover:bg-error/20 text-error rounded-full p-2 transition-colors cursor-pointer"
+              >
+                <XMarkIcon />
+              </button>
+            )}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-gray-300 group-hover:text-primary transition-colors"
+            >
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </div>
+        </div>
+      </Link>
     );
   };
   const handleOpenModal = (modalWindow: JSX.Element) => {
@@ -87,15 +118,15 @@ export default function TopicsTree() {
                 className="group bg-surface p-4 rounded-xl border border-gray-300 space-y-4 hover:bg-background transition-colors duration-300 my-4 first:mt-0 last:mb-0"
                 key={topic.id}
               >
-                <Link href={`/skolar/classroom/${id}/topic/${topic.id}`}>
-                  <TreeItem
-                    key={topic.id}
-                    item={topic}
-                    render={renderItem}
-                    childItems={topic.topicNotes}
-                    renderChildren={renderChild}
-                  />
-                </Link>
+                <TreeItem
+                  key={topic.id}
+                  item={topic}
+                  render={renderItem}
+                  childItems={topic.topicNotes}
+                  renderChildren={(child, childId) =>
+                    renderChild(child, id, topic.id)
+                  }
+                />
               </li>
             ))}
           </ul>
