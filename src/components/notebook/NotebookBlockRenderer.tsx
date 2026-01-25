@@ -1,4 +1,5 @@
 import TTopicNoteBlock from "@/types/TopicNoteBlock";
+import CustomImage from "../shared/CustomImage";
 
 interface NotebookBlockRendererProps {
   block: TTopicNoteBlock;
@@ -35,11 +36,14 @@ export default function NotebookBlockRenderer({
       case "image":
         return (
           <figure className="my-4">
-            <img
-              src={block.imageUrl || block.content}
-              alt={block.content || "Notebook image"}
-              className="max-w-full h-auto rounded-lg shadow-md mx-auto"
-            />
+            <div className="relative w-full h-96">
+              <CustomImage
+                src={block.imageUrl || block.content}
+                alt={block.content || "Notebook image"}
+                fill
+                className="object-contain rounded-lg shadow-md"
+              />
+            </div>
             {block.content && block.imageUrl && (
               <figcaption className="text-center text-sm text-body mt-2">
                 {block.content}
