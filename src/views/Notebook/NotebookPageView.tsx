@@ -4,6 +4,8 @@ import useTopicNoteBlocksSWR from "@/hooks/useTopicNoteBlocksSWR";
 import NotebookBlockRenderer from "@/components/notebook/NotebookBlockRenderer";
 import Link from "next/link";
 import { useUserContext } from "@/store/userStore";
+import { useModal } from "@/store/modalStore";
+import AddTopicNoteBlockModal from "@/components/shared/modals/addTopicNoteBlockModal";
 
 interface INotebookPageViewSettings {
   classroomId: number;
@@ -18,17 +20,21 @@ interface INotebookPageView {
 
 export default function NotebookPageView({ settings }: INotebookPageView) {
   const { blocks, isLoading, error } = useTopicNoteBlocksSWR(
-    settings.classroomId,
     settings.topicId,
-    settings.noteId
+    settings.noteId,
   );
   const { user } = useUserContext();
-  //TODO: TopicNoteBlock modal will be created
-  const handleAddBlockModal = () => {};
+  const modal = useModal();
+  const handleAddBlockModal = () => {
+    modal?.openModal(<AddTopicNoteBlockModal />);
+  };
   const renderAction = () => {
     if (!user?.isEducator) return null;
     return (
-      <button className="bg-primary shadow text-white font-semibold px-4 py-2 rounded-full border border-primary hover:bg-primary/90 hover:text-white transition-colors cursor-pointer">
+      <button
+        onClick={handleAddBlockModal}
+        className="bg-primary shadow text-white font-semibold px-4 py-2 rounded-full border border-primary hover:bg-primary/90 hover:text-white transition-colors cursor-pointer"
+      >
         Add Topic
       </button>
     );

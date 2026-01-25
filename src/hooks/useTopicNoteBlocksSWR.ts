@@ -7,18 +7,17 @@ import useSWR from "swr";
 const SWR_KEY = "topicNoteBlocks";
 
 export default function useTopicNoteBlocksSWR(
-    classId: number,
     topicId: number,
     noteId: number
 ) {
     const { data, isLoading, error } = useSWR(
-        [SWR_KEY, classId, topicId, noteId],
+        [SWR_KEY, topicId, noteId],
         () => {
             const fetchAdapterWithArgs = swrFetchAdapter<
                 TTopicNoteBlock[],
-                [number, number, number]
+                [number, number]
             >(getTopicNoteBlocks);
-            return fetchAdapterWithArgs(classId, topicId, noteId);
+            return fetchAdapterWithArgs(topicId, noteId);
         }
     );
 
