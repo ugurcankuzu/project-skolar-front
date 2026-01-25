@@ -1,6 +1,6 @@
 import { SVGProps } from "react";
 
-interface IAssignmentsIcon extends SVGProps<SVGSVGElement> {}
+type IAssignmentsIcon = SVGProps<SVGSVGElement>;
 export default function AssignmentsIcon({
   className = "size-6",
   ...props

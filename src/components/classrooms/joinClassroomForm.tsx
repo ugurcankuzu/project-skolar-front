@@ -17,6 +17,7 @@ import { mutate } from "swr";
 import { useModal } from "@/store/modalStore";
 
 export default function JoinClassroomForm() {
+  // Hooks
   const {
     register,
     handleSubmit,
@@ -34,6 +35,9 @@ export default function JoinClassroomForm() {
   const { loading, startLoading, stopLoading } = useLoading();
   const { message, type, showToast } = useToast();
   const { closeModal } = useModal()!;
+  // Hooks End
+
+  // Handlers
   const submitHandler = async (data: JoinClassroomFormValues) => {
     startLoading();
     try {
@@ -47,7 +51,7 @@ export default function JoinClassroomForm() {
       } else {
         showToast(res.message ?? "An unexpected error occured.", "error");
       }
-    } catch (err) {
+    } catch {
       showToast("An unexpected error occured.", "error");
     } finally {
       stopLoading();
@@ -56,7 +60,7 @@ export default function JoinClassroomForm() {
 
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLInputElement>,
-    index: number
+    index: number,
   ) => {
     if (e.ctrlKey && e.key.toLowerCase() === "v") {
       return;
@@ -121,6 +125,7 @@ export default function JoinClassroomForm() {
       handleSubmit(submitHandler)();
     }
   };
+  // Handlers End
 
   return (
     <form
@@ -150,7 +155,7 @@ export default function JoinClassroomForm() {
                 id={`char${index + 1}`}
                 maxLength={1}
                 {...register(
-                  `char${index + 1}` as keyof JoinClassroomFormValues
+                  `char${index + 1}` as keyof JoinClassroomFormValues,
                 )}
                 onKeyDown={(e) => handleKeyDown(e, index)}
                 className="text-center text-xl font-semibold uppercase"
@@ -168,7 +173,7 @@ export default function JoinClassroomForm() {
               >
                 {error.message}
               </p>
-            )
+            ),
         )}
       </div>
       <div className="flex items-center justify-end gap-2">

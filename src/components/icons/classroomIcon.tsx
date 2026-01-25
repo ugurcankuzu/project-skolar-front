@@ -1,6 +1,6 @@
 import { SVGProps } from "react";
 
-interface IClassroomIcon extends SVGProps<SVGSVGElement> {}
+type IClassroomIcon = SVGProps<SVGSVGElement>;
 export default function ClassroomIcon({
   className = "size-6",
   ...props

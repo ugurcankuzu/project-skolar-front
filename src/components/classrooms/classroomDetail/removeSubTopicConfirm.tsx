@@ -1,7 +1,6 @@
 import PopUp from "@/components/shared/popup";
 import EPopupColors from "@/enums/popupColors";
 import removeTopicNote from "@/helpers/removeTopicNote";
-import useClassroomId from "@/hooks/useClassroomId";
 import useLoading from "@/hooks/useLoading";
 import useToast from "@/hooks/useToast";
 import { useModal } from "@/store/modalStore";
@@ -14,26 +13,31 @@ interface IRemoveSubTopicConfirm {
 export default function RemoveSubTopicConfirm({
   topicNote,
 }: IRemoveSubTopicConfirm) {
+  // Hooks
   const modalContext = useModal();
-  const { id } = useClassroomId();
   const { loading, startLoading, stopLoading } = useLoading();
   const { message, type, showToast } = useToast();
+  // Hooks End
+
+  // Handlers
   const handleConfirm = async () => {
     try {
       startLoading();
-      const res = await removeTopicNote(topicNote.topicId, topicNote.id, id);
+      const res = await removeTopicNote(topicNote.topicId, topicNote.id);
       if (!res.success) {
         showToast(res.message ?? "An unexpected error occured.", "error");
         return;
       }
       mutate("topics");
       modalContext?.closeModal();
-    } catch (err) {
+    } catch {
       showToast("An unexpected error occured.", "error");
     } finally {
       stopLoading();
     }
   };
+  // Handlers End
+
   return (
     <div className="flex flex-col gap-4">
       {message && type === "error" && (

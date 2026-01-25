@@ -1,4 +1,4 @@
-interface IFetchWrapper<T> extends RequestInit {
+interface IFetchWrapper extends RequestInit {
   parseJson?: boolean;
   url: string;
   includeCredentials?: boolean;

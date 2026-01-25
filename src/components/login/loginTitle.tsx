@@ -14,7 +14,7 @@ export default function LoginTitle() {
     <motion.div variants={loginSectionChildVariant}>
       <p className={LoginTitleStyles.title}>Log in to your account</p>
       <p className={LoginTitleStyles.subtitle}>
-        Don't you have an account ?{" "}
+        Don&apos;t you have an account ?{" "}
         <span className={LoginTitleStyles.signupLink}>
           <Link href={"/signup"}>Sign up</Link>
         </span>

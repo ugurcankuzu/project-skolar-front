@@ -10,17 +10,6 @@ import { createContext, useContext, useEffect, useState } from "react";
 // TUserProfile tip tanımınızın burada veya global bir dosyada olduğunu varsayıyorum.
 // type TUserProfile = { ... };
 
-const userInitial: TUserProfile = {
-  id: 0,
-  firstName: "",
-  lastName: "",
-  email: "",
-  isEducator: false,
-  isFirstLogin: false,
-  updatedAt: "",
-  createdAt: "",
-};
-
 export const UserContext = createContext<{
   user: TUserProfile | null;
   setUser: (user: TUserProfile) => void;
@@ -49,7 +38,7 @@ export function UserContextProvider({
   const [user, setUser] = useState<TUserProfile | null>(null);
   // Bu state, ilk yükleme ve yönlendirme mantığı tamamlanana kadar tüm arayüzü kilitlemek için kullanılır.
   const [isInitializing, setIsInitializing] = useState(true);
-  const { loading, startLoading, stopLoading } = useLoading(); // Bu hook'u manuel güncelleme için saklayalım.
+  const { startLoading, stopLoading } = useLoading(); // Bu hook'u manuel güncelleme için saklayalım.
   const router = useRouter();
 
   // Sadece component ilk yüklendiğinde çalışacak olan ana useEffect.

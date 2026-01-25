@@ -1,6 +1,6 @@
 import { SVGProps } from "react";
 
-interface IBellIcon extends SVGProps<SVGSVGElement> {}
+type IBellIcon = SVGProps<SVGSVGElement>;
 export default function BellIcon({
   className = "size-6",
   ...props

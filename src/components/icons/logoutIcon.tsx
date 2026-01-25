@@ -1,6 +1,6 @@
 import { SVGProps } from "react";
 
-interface ILogoutIcon extends SVGProps<SVGSVGElement> {}
+type ILogoutIcon = SVGProps<SVGSVGElement>;
 export default function LogoutIcon({
   className = "size-6",
   ...props

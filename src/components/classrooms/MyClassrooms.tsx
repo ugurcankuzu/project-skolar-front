@@ -8,15 +8,22 @@ import { useUserContext } from "@/store/userStore";
 import JoinClassroomModal from "../shared/modals/joinClassroomModal";
 
 export default function MyClassrooms() {
+  // Hooks
   const { classrooms, isLoading, error } = useClassroomsSummarySWR();
   const { user } = useUserContext();
   const modalContext = useModal();
+  // Hooks End
+
+  // Handlers
   const handleCreateClassroom = () => {
     modalContext?.openModal(<CreateClassroomModal />);
   };
   const handleJoinClassroom = () => {
     modalContext?.openModal(<JoinClassroomModal />);
   };
+  // Handlers End
+
+  // Renderers
   const renderAction = () => {
     return (
       <button
@@ -27,7 +34,7 @@ export default function MyClassrooms() {
       </button>
     );
   };
-  const renderClasrooms = () => {
+  const renderClassrooms = () => {
     if (error) {
       return (
         <li className="text-red-500 w-full h-full flex items-center justify-center">
@@ -35,6 +42,7 @@ export default function MyClassrooms() {
         </li>
       );
     }
+    // Renderers End
 
     if (isLoading) {
       return (
@@ -69,7 +77,7 @@ export default function MyClassrooms() {
       </div>
       <div className="w-full h-full">
         <ul className="size-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {renderClasrooms()}
+          {renderClassrooms()}
         </ul>
       </div>
     </div>

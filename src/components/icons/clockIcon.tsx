@@ -1,6 +1,6 @@
 import { SVGProps } from "react";
 
-interface IClockIcon extends SVGProps<SVGSVGElement> {}
+type IClockIcon = SVGProps<SVGSVGElement>;
 export default function ClockIcon({
   className = "size-6",
   ...props

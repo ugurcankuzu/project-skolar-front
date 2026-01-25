@@ -1,7 +1,10 @@
 import { SVGProps } from "react";
 
-interface IExpandCollapseIcon extends SVGProps<SVGSVGElement> {}
-export default function ExpandCollapseIcon({ className = "size-6", ...props }) {
+type IExpandCollapseIcon = SVGProps<SVGSVGElement>;
+export default function ExpandCollapseIcon({
+  className = "size-6",
+  ...props
+}: IExpandCollapseIcon) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

@@ -1,6 +1,6 @@
 import { SVGProps } from "react";
 
-interface IComputerIcon extends SVGProps<SVGSVGElement> {}
+type IComputerIcon = SVGProps<SVGSVGElement>;
 export default function ComputerIcon({
   className = "size-6",
   ...props
@@ -11,6 +11,7 @@ export default function ComputerIcon({
       viewBox="0 0 24 24"
       fill="currentColor"
       className={className}
+      {...props}
     >
       <path
         fillRule="evenodd"

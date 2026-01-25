@@ -2,15 +2,11 @@ import { MiddlewareConfig, NextRequest, NextResponse } from "next/server";
 import verifyToken from "./helpers/verifyToken";
 
 const AUTH_ROUTES = ["/login", "/signup"];
-const PUBLIC_ROUTES = ["/"];
 const PROTECTED_ROUTES = ["/skolar"];
 
 export async function middleware(req: NextRequest) {
   const url = req.nextUrl;
   const isRouteProtected = PROTECTED_ROUTES.some((route) =>
-    url.pathname.startsWith(route)
-  );
-  const isRoutePublic = PUBLIC_ROUTES.some((route) =>
     url.pathname.startsWith(route)
   );
   const isRouteAuth = AUTH_ROUTES.some((route) =>

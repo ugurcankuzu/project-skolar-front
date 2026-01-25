@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import { mutate } from "swr";
 
 export default function AddParticipantForm() {
+  // Hooks
   const {
     register,
     handleSubmit,
@@ -28,6 +29,9 @@ export default function AddParticipantForm() {
   const { message, type, showToast } = useToast();
   const { loading, startLoading, stopLoading } = useLoading();
   const { id } = useClassroomId();
+  // Hooks End
+
+  // Handlers
   const submitHandler = async (data: AddParticipantFormValues) => {
     try {
       startLoading();
@@ -42,12 +46,13 @@ export default function AddParticipantForm() {
       } else {
         showToast(res.message ?? "An unexpected error occured.", "error");
       }
-    } catch (err) {
+    } catch {
       showToast("An unexpected error occured.", "error");
     } finally {
       stopLoading();
     }
   };
+  // Handlers End
   return (
     <form
       onSubmit={handleSubmit(submitHandler)}

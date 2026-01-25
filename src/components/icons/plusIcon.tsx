@@ -1,7 +1,10 @@
 import { SVGProps } from "react";
 
-interface IPlusIcon extends SVGProps<SVGSVGElement> {}
-export default function PlusIcon({ className = "size-6", ...props }) {
+type IPlusIcon = SVGProps<SVGSVGElement>;
+export default function PlusIcon({
+  className = "size-6",
+  ...props
+}: IPlusIcon) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
