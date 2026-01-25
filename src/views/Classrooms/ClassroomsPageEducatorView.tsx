@@ -1,4 +1,4 @@
-import MyClassrooms from "@/components/classrooms/MyClassrooms";
+import MyClassrooms from "@/components/classrooms/myClassrooms";
 import ViewContainer from "@/components/shared/viewContainer";
 
 export default function ClassroomsPageEducatorView() {

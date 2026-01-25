@@ -1,5 +1,5 @@
 export default async function AddTopic(formData: FormData, classId: number) {
-  const res = await fetch("/api/topics/" + classId, {
+  const res = await fetch("/api/topics/class/" + classId, {
     method: "POST",
     body: formData,
     credentials: "include",

@@ -4,19 +4,25 @@ import { useUserContext } from "@/store/userStore";
 import TParticipant from "@/types/participant";
 import dynamic from "next/dynamic";
 const RemoveParticipantModal = dynamic(
-  () => import("@/components/shared/modals/removeParticipantModal")
+  () => import("@/components/shared/modals/removeParticipantModal"),
 );
 interface IParticipantItem {
   participant: TParticipant;
 }
 export default function ParticipantItem({ participant }: IParticipantItem) {
+  // Hooks
   const modalContext = useModal();
   const { user } = useUserContext();
+  // Hooks End
+
+  // Handlers
   const handleOpenModal = () => {
     modalContext?.openModal(
-      <RemoveParticipantModal participant={participant} />
+      <RemoveParticipantModal participant={participant} />,
     );
   };
+  // Handlers End
+
   return (
     <tr className="even:bg-background odd:bg-surface hover:bg-background/30 transition-bg duration-300 cursor-pointer">
       <td className="p-2 border-r border-gray-300">{participant.id}</td>

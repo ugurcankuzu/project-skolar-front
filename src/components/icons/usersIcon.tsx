@@ -1,7 +1,10 @@
 import { SVGProps } from "react";
 
-interface IUsersIcon extends SVGProps<SVGSVGElement> {}
-export default function UsersIcon({ className = "size-6", ...props }) {
+type IUsersIcon = SVGProps<SVGSVGElement>;
+export default function UsersIcon({
+  className = "size-6",
+  ...props
+}: IUsersIcon) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

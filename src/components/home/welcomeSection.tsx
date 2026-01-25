@@ -1,14 +1,12 @@
 "use client";
-import { enterScreen } from "@/animations/shared";
 import useNotificationsSWR from "@/hooks/useNotificationsSWR";
 import { useUserContext } from "@/store/userStore";
-import { motion } from "motion/react";
 import Pill from "../shared/pill";
 import WelcomeSectionSkeleton from "@/skeletons/welcomeSectionSkeleton";
 
 export default function WelcomeSection() {
   const { user } = useUserContext();
-  const { notifications, isLoading, error } = useNotificationsSWR();
+  const { notifications } = useNotificationsSWR();
   const getSubtitle = () => {
     const educatorSubtitle = "Manage your classrooms and assignments";
     const studentSubtitle =

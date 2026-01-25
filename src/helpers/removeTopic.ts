@@ -1,5 +1,5 @@
-export default async function removeTopic(topicId: number, classId: number) {
-  const res = await fetch("/api/topics/" + classId + "/" + topicId, {
+export default async function removeTopic(topicId: number) {
+  const res = await fetch("/api/topics/" + topicId, {
     method: "DELETE",
     credentials: "include",
   });

@@ -1,4 +1,3 @@
-import { parseClassroomLink } from "@/helpers/classroomLinkGenerate";
 import ClassroomTopicsView from "@/views/Classrooms/Topics/ClassroomTopicsView";
 import { notFound } from "next/navigation";
 

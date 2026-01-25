@@ -1,7 +1,10 @@
 import { useUserContext } from "@/store/userStore";
 
 export default function ParticipantsHead() {
+  // Hooks
   const { user } = useUserContext();
+  // Hooks End
+  
   return (
     <tr className="bg-background">
       <th className="whitespace-nowrap p-2 border-r border-gray-300">Id</th>

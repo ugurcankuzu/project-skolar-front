@@ -1,7 +1,10 @@
 import { SVGProps } from "react";
 
-interface IXMarkIcon extends SVGProps<SVGSVGElement> {}
-export default function XMarkIcon({ className = "size-6", ...props }) {
+type IXMarkIcon = SVGProps<SVGSVGElement>;
+export default function XMarkIcon({
+  className = "size-6",
+  ...props
+}: IXMarkIcon) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

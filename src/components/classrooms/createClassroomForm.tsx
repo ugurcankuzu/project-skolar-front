@@ -13,8 +13,13 @@ import Input from "../shared/input";
 import PopUp from "../shared/popup";
 import useToast from "@/hooks/useToast";
 import Loader from "../shared/loader";
+import { useModal } from "@/store/modalStore";
+
+const FILE_INPUT_CLASSES =
+  "file:bg-primary file:text-white file:font-semibold file:px-2 file:py-1 file:rounded-full file:hover:bg-primary/90 file:hover:text-white file:transition-colors file:cursor-pointer file:border file:border-primary border-0";
 
 export default function CreateClassroomForm() {
+  // Hooks
   const {
     register,
     handleSubmit,
@@ -27,6 +32,10 @@ export default function CreateClassroomForm() {
   });
   const { loading, startLoading, stopLoading } = useLoading();
   const { message, type, showToast } = useToast();
+  const { closeModal } = useModal()!;
+  // Hooks End
+
+  // Handlers
   const submitHandler = async (data: CreateClassroomFormValues) => {
     try {
       startLoading();
@@ -35,24 +44,29 @@ export default function CreateClassroomForm() {
       formData.append("description", data.description);
       formData.append("userLimit", data.userLimit.toString());
       if (data.imageFile && data.imageFile.length > 0) {
+        
         formData.append("imageFile", data.imageFile[0]);
       }
       const res = await createClassroom(formData);
-      console.log(res);
       if (res.success) {
         mutate("classroomsSummary");
         showToast(res.message ?? "Classroom created successfully.", "success");
         reset();
         clearErrors();
+        closeModal();
       } else {
         showToast(res.message ?? "An unexpected error occured.", "error");
       }
-    } catch (err) {
+    } catch {
       showToast("An unexpected error occured.", "error");
     } finally {
       stopLoading();
     }
   };
+  // Handlers End
+
+
+  
   return (
     <form
       className="flex flex-col gap-4"
@@ -94,7 +108,7 @@ export default function CreateClassroomForm() {
             type="file"
             id="coverImage"
             {...register("imageFile")}
-            className="file:bg-primary file:text-white file:font-semibold file:px-2 file:py-1 file:rounded-full file:hover:bg-primary/90 file:hover:text-white file:transition-colors file:cursor-pointer file:transition-colors file:cursor-pointer file:border file:border-primary border-0"
+            className={FILE_INPUT_CLASSES}
             accept="image/png, image/jpeg"
             multiple={false}
           />

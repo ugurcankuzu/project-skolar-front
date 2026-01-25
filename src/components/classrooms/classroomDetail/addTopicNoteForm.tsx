@@ -18,6 +18,7 @@ interface ITopicNoteForm {
   topicId: number;
 }
 export default function AddTopicNoteForm({ topicId }: ITopicNoteForm) {
+  // Hooks
   const {
     register,
     handleSubmit,
@@ -32,6 +33,9 @@ export default function AddTopicNoteForm({ topicId }: ITopicNoteForm) {
   const { message, type, showToast } = useToast();
   const { loading, startLoading, stopLoading } = useLoading();
   const { id } = useClassroomId();
+  // Hooks End
+
+  // Handlers
   const submitHandler = async (data: AddTopicNoteFormValues) => {
     try {
       startLoading();
@@ -47,12 +51,13 @@ export default function AddTopicNoteForm({ topicId }: ITopicNoteForm) {
       } else {
         showToast(res.message ?? "An unexpected error occured.", "error");
       }
-    } catch (err) {
+    } catch {
       showToast("An unexpected error occured.", "error");
     } finally {
       stopLoading();
     }
   };
+  // Handlers End
 
   return (
     <form

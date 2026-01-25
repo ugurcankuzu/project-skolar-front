@@ -2,7 +2,6 @@ import Loader from "@/components/shared/loader";
 import PopUp from "@/components/shared/popup";
 import EPopupColors from "@/enums/popupColors";
 import removeTopic from "@/helpers/removeTopic";
-import useClassroomId from "@/hooks/useClassroomId";
 import useLoading from "@/hooks/useLoading";
 import useToast from "@/hooks/useToast";
 import { useModal } from "@/store/modalStore";
@@ -13,21 +12,20 @@ interface IRemoveTopicConfirm {
   topic: TTopic;
 }
 export default function RemoveTopicConfirm({ topic }: IRemoveTopicConfirm) {
-  const { id } = useClassroomId();
   const { loading, startLoading, stopLoading } = useLoading();
   const { message, type, showToast } = useToast();
   const modalContext = useModal();
   const handleConfirm = async () => {
     try {
       startLoading();
-      const res = await removeTopic(topic.id, id);
+      const res = await removeTopic(topic.id);
       if (!res.success) {
         showToast(res.message ?? "An unexpected error occured.", "error");
         return;
       }
       mutate("topics");
       modalContext?.closeModal();
-    } catch (err) {
+    } catch {
       showToast("An unexpected error occured.", "error");
     } finally {
       stopLoading();

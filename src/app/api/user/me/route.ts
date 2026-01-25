@@ -2,9 +2,9 @@
 import getJWT from "@/helpers/getJWT";
 import { IApiResponse } from "@/types/fetchWrapper";
 import { TUserProfile } from "@/types/UserProfile";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     const tkn = await getJWT();
 
@@ -61,5 +61,5 @@ export async function GET(req: NextRequest) {
   }
 }
 
-export async function PATCH(req: NextRequest) { } //Implemented later.
-export async function DELETE(req: NextRequest) { } //Implemented later
+export async function PATCH() { } //Implemented later.
+export async function DELETE() { } //Implemented later

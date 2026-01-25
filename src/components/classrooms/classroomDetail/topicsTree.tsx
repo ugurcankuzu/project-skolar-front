@@ -1,7 +1,7 @@
 "use client";
 import XMarkIcon from "@/components/icons/xMarkIcon";
+import ChevronRightIcon from "@/components/icons/chevronRightIcon";
 import TreeItem from "@/components/shared/treeItem";
-import classroomLinkGenerate from "@/helpers/classroomLinkGenerate";
 import formatTimeAgo from "@/helpers/getTimeAgo";
 import useClassroomId from "@/hooks/useClassroomId";
 import useTopicsSWR from "@/hooks/useTopicsSWR";
@@ -14,22 +14,32 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { JSX } from "react";
 const CreateTopicModal = dynamic(
-  () => import("@/components/shared/modals/createTopicModal")
+  () => import("@/components/shared/modals/createTopicModal"),
 );
 const RemoveSubTopicModal = dynamic(
-  () => import("@/components/shared/modals/removeSubTopicModal")
+  () => import("@/components/shared/modals/removeSubTopicModal"),
 );
 
 export default function TopicsTree() {
+  // Hooks
   const { id } = useClassroomId();
   const { topics, isLoading, error } = useTopicsSWR(id);
   const modalContext = useModal();
   const { user } = useUserContext();
+  // Hooks End
+
   if (isLoading) return <TopicTreeSkeleton />;
   if (error)
     return (
       <div className="text-red-500 text-center">Failed to load topics.</div>
     );
+  // Handlers
+  const handleOpenModal = (modalWindow: JSX.Element) => {
+    modalContext?.openModal(modalWindow);
+  };
+  // Handlers End
+
+  // Renderers
   const renderItem = (item: TTopic) => {
     return (
       <div className="space-y-2">
@@ -49,7 +59,7 @@ export default function TopicsTree() {
   const renderChild = (
     item: TTopicNote,
     id: string | number,
-    topicId: number
+    topicId: number,
   ) => {
     return (
       <Link
@@ -75,28 +85,14 @@ export default function TopicsTree() {
                 <XMarkIcon />
               </button>
             )}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-gray-300 group-hover:text-primary transition-colors"
-            >
-              <path d="m9 18 6-6-6-6" />
-            </svg>
+            <ChevronRightIcon className="text-gray-300 group-hover:text-primary transition-colors size-4" />
           </div>
         </div>
       </Link>
     );
   };
-  const handleOpenModal = (modalWindow: JSX.Element) => {
-    modalContext?.openModal(modalWindow);
-  };
+  // Renderers End
+  
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -123,7 +119,7 @@ export default function TopicsTree() {
                   item={topic}
                   render={renderItem}
                   childItems={topic.topicNotes}
-                  renderChildren={(child, childId) =>
+                  renderChildren={(child) =>
                     renderChild(child, id, topic.id)
                   }
                 />

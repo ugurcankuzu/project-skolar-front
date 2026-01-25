@@ -8,17 +8,22 @@ import ParticipantsHead from "./participantHead";
 import ParticipantItem from "./participantItem";
 import dynamic from "next/dynamic";
 const AddParticipantModal = dynamic(
-  () => import("@/components/shared/modals/addParticipantModal")
+  () => import("@/components/shared/modals/addParticipantModal"),
 );
 
 export default function ParticipantsTable() {
+  // Hooks
   const { id } = useClassroomId();
   const { participants, isLoading, error } = useParticipantsInClassSWR(id);
   const modalContext = useModal();
   const { user } = useUserContext();
+  // Hooks End
+
+  // Handlers
   const handleOpenModal = () => {
     modalContext?.openModal(<AddParticipantModal />);
   };
+  // Handlers End
   if (isLoading) return <ParticipantTableSkeleton />;
   if (error)
     return (

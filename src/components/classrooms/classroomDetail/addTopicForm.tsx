@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import { mutate } from "swr";
 
 export default function AddTopicForm() {
+  // Hooks
   const {
     register,
     handleSubmit,
@@ -28,6 +29,9 @@ export default function AddTopicForm() {
   const { message, type, showToast } = useToast();
   const { loading, startLoading, stopLoading } = useLoading();
   const { id } = useClassroomId();
+  // Hooks End
+
+  // Handlers
   const submitHandler = async (data: AddTopicFormValues) => {
     try {
       startLoading();
@@ -43,12 +47,14 @@ export default function AddTopicForm() {
       } else {
         showToast(res.message ?? "An unexpected error occured.", "error");
       }
-    } catch (err) {
+    } catch {
       showToast("An unexpected error occured.", "error");
     } finally {
       stopLoading();
     }
   };
+  // Handlers End
+
   return (
     <form
       className="flex flex-col gap-4"

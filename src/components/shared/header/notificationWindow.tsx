@@ -1,7 +1,5 @@
-import formatTimeAgo from "@/helpers/getTimeAgo";
 import TNotification from "@/types/Notification";
-import Link from "next/link";
-import { Dispatch, SetStateAction, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import NotificationItem from "./notificationItem";
 
 interface INotificationWindow {

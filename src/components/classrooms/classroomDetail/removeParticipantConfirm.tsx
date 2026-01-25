@@ -15,10 +15,14 @@ interface IRemoveParticipantConfirm {
 export default function RemoveParticipantConfirm({
   participant,
 }: IRemoveParticipantConfirm) {
+  // Hooks
   const { loading, startLoading, stopLoading } = useLoading();
   const { message, type, showToast } = useToast();
   const { id } = useClassroomId();
   const modalContext = useModal();
+  // Hooks End
+
+  // Handlers
   const submitHandler = async () => {
     try {
       startLoading();
@@ -29,12 +33,14 @@ export default function RemoveParticipantConfirm({
       }
       mutate("participantsInClassroom");
       modalContext?.closeModal();
-    } catch (err) {
+    } catch {
       showToast("An unexpected error occured.", "error");
     } finally {
       stopLoading();
     }
   };
+  // Handlers End
+
   return (
     <div className="flex flex-col gap-4">
       {message && type === "error" && (

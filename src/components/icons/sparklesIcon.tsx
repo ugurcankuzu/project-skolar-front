@@ -1,6 +1,6 @@
 import { SVGProps } from "react";
 
-interface ISparklesIcon extends SVGProps<SVGSVGElement> {}
+type ISparklesIcon = SVGProps<SVGSVGElement>;
 export default function SparklesIcon({
   className = "size-6",
   ...props

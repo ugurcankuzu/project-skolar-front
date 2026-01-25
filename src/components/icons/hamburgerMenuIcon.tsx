@@ -1,6 +1,6 @@
 import { SVGProps } from "react";
 
-interface IHamburgerMenuIcon extends SVGProps<SVGSVGElement> {}
+type IHamburgerMenuIcon = SVGProps<SVGSVGElement>;
 export default function HamburgerMenuIcon({
   className = "size-6",
   ...props

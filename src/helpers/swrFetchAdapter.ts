@@ -8,7 +8,7 @@ import { IApiResponse } from "@/types/fetchWrapper"; // fetchWrapper'dan gelen s
  * @param apiFn Dönüştürülecek olan API fonksiyonu (örn: getNotifications, getUserProfile).
  * @returns useSWR tarafından kullanılmaya hazır, yeni bir fetcher fonksiyonu.
  */
-export default function swrFetchAdapter<T, A extends any[]>(
+export default function swrFetchAdapter<T, A extends unknown[]>(
   apiFn: (...args: A) => Promise<IApiResponse<T>>
 ) {
   // Bu, useSWR'a fetcher olarak verilecek olan asıl fonksiyondur.

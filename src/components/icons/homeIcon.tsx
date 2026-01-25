@@ -1,6 +1,6 @@
 import { SVGProps } from "react";
 
-interface IHomeIcon extends SVGProps<SVGSVGElement> {}
+type IHomeIcon = SVGProps<SVGSVGElement>;
 export default function HomeIcon({
   className = "size-6",
   ...props

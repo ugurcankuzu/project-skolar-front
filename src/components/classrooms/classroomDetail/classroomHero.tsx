@@ -7,9 +7,14 @@ import ClassroomHeroSkeleton from "@/skeletons/classrooms/classroomHeroSkeleton"
 import ClassroomHeroDetailCard from "./classroomHeroDetailCard";
 
 export default function ClassroomHeroCard() {
+  // Hooks
   const { id } = useClassroomId();
   const { classroom, isLoading, error } = useClassroomDetailSWR(id);
+  // Hooks End
+
   if (isLoading) return <ClassroomHeroSkeleton />;
+  if (error || !classroom) return null;
+
   return (
     <div className="w-full space-y-8">
       <div className="size-full h-64 relative">
@@ -37,13 +42,13 @@ export default function ClassroomHeroCard() {
           <ClassroomHeroDetailCard
             title="Created"
             data={formatTimeAgo(
-              classroom?.createdAt.toString() ?? new Date().toString()
+              classroom?.createdAt.toString() ?? new Date().toString(),
             )}
           />
           <ClassroomHeroDetailCard
             title="Last Update"
             data={formatTimeAgo(
-              classroom?.updatedAt.toString() ?? new Date().toString()
+              classroom?.updatedAt.toString() ?? new Date().toString(),
             )}
           />
         </div>

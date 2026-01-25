@@ -1,7 +1,10 @@
 import { SVGProps } from "react";
 
-interface IArrowRightIcon extends SVGProps<SVGSVGElement> {}
-export default function ArrowRightIcon({ className = "size-6", ...props }) {
+type IArrowRightIcon = SVGProps<SVGSVGElement>;
+export default function ArrowRightIcon({
+  className = "size-6",
+  ...props
+}: IArrowRightIcon) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
